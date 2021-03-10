@@ -2,6 +2,12 @@
   "name": "@ionic-enterprise/apple-pay",
   "version": "0.0.1",
   "description": "Capacitor Plugin used to enable Apple Pay in an Application",
+  "author": "Ionic Team <hi@ionic.io> (https://ionicframework.com)",
+  "license": "SEE LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ionic-team/enterprise-apple-pay"
+  },
   "main": "dist/plugin.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
@@ -14,8 +20,6 @@
     "watch": "tsc --watch",
     "prepublishOnly": "npm run build"
   },
-  "author": "Ionic",
-  "license": "MIT",
   "devDependencies": {
     "@capacitor/android": "^2.4.5",
     "@capacitor/core": "^2.4.5",
@@ -54,10 +58,6 @@
   },
   "prettier": "@ionic/prettier-config",
   "swiftlint": "@ionic/swiftlint-config",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ionic-team/enterprise-apple-pay"
-  },
   "bugs": {
     "url": "https://github.com/ionic-team/enterprise-apple-pay/issues"
   },
