@@ -48,7 +48,7 @@ class ApplePayHandler: NSObject {
         let paymentRequest = PKPaymentRequest()
         paymentRequest.paymentSummaryItems = paymentSummaryItems
         paymentRequest.merchantIdentifier = merchant.params.merchantIdentifier
-        paymentRequest.merchantCapabilities = capabilities[0]
+        paymentRequest.merchantCapabilities = capabilities
         paymentRequest.countryCode = request.countryCode
         paymentRequest.currencyCode = request.currencyCode
         paymentRequest.supportedNetworks = PluginUtils.castSupportedNetworksToEnum(networks: request.supportedNetworks)

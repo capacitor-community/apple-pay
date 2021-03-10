@@ -9,7 +9,7 @@
 import Foundation
 import PassKit
 
-class PluginUtils: NSObject {
+enum PluginUtils {
     
     static func log(statementToPrint: String, functionName: String = #function, line:Int = #line) {
         print("\(functionName) [line \(line)] \(statementToPrint)")
@@ -103,15 +103,15 @@ class PluginUtils: NSObject {
     }
     
     static func castSupportedNetworksToEnum(networks: [String]) -> [PKPaymentNetwork] {
-        networks.map { (value) -> PKPaymentNetwork in
-            return PluginUtils.jsSupportedNetworkToEnum(network: value)!
+        return networks.compactMap { (value) -> PKPaymentNetwork? in
+            return PluginUtils.jsSupportedNetworkToEnum(network: value)
         }
     }
     
-    static func castMerchantCapabilitiesToEnum(capabilities: [String]) -> [PKMerchantCapability] {
-        capabilities.map { (value) -> PKMerchantCapability in
-            return PluginUtils.jsMerchantCapabilityToEnum(capability: value)!
-        }
+    static func castMerchantCapabilitiesToEnum(capabilities: [String]) -> PKMerchantCapability {
+        return PKMerchantCapability.init(
+            capabilities.compactMap({ PluginUtils.jsMerchantCapabilityToEnum(capability: $0) })
+        )
     }
     
     static func castMerchantValidationToClass(jsMerchantValidation: AnyObject) -> JSMerchantValidation {
