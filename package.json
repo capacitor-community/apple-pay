@@ -41,7 +41,7 @@
     "dist/",
     "ios/",
     "android/",
-    "CapacitorPluginApplePay.podspec"
+    "IonicEnterpriseApplePay.podspec"
   ],
   "keywords": [
     "capacitor",
