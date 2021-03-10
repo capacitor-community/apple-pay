@@ -1,5 +1,5 @@
 {
-  "name": "capacitor-plugin-apple-pay",
+  "name": "@ionic-enterprise/apple-pay",
   "version": "0.0.1",
   "description": "Capacitor Plugin used to enable Apple Pay in an Application",
   "main": "dist/plugin.js",
