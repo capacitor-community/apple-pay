@@ -1,0 +1,13 @@
+{
+  "appId": "com.dallastjames.ionic.applepaydemo",
+  "appName": "apple-pay-demo",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}
