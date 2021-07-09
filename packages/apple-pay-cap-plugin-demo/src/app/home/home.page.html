@@ -1,0 +1,23 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> Apple Pay Demo </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Apple Pay Demo</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="container">
+    <ion-button color="primary" (click)="isAvailable()"
+      >Check Availability</ion-button
+    >
+    <ion-button color="success" (click)="paymentTest()"
+      >Payment Request Test</ion-button
+    >
+    <div class="apple-pay-button apple-pay-button-white"></div>
+  </div>
+</ion-content>

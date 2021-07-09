@@ -1,0 +1,15 @@
+{
+  "version": "0.1.1",
+  "packages": [
+    "packages/*"
+  ],
+  "npmClient": "npm",
+  "command": {
+    "bootstrap": {
+      "hoist": true
+    },
+    "version": {
+      "message": "chore(release): %v"
+    }
+  }
+}
