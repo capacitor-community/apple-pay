@@ -11,8 +11,17 @@ import PassKit
 
 typealias PaymentCompletionHandler = (Bool, Data?) -> Void
 
+extension PKPaymentSummaryItem {
+    convenience init(fromItem: JSSummaryItem) {
+        self.init()
+        label = fromItem.label
+        amount = NSDecimalNumber(string: fromItem.amount)
+        type = fromItem.type == "pending" ? .pending : .final
+    }
+}
+
 class ApplePayHandler: NSObject {
-    
+
     var paymentController: PKPaymentAuthorizationController?
     var paymentStatus = PKPaymentAuthorizationStatus.failure
     var paymentSummaryItems = [PKPaymentSummaryItem]()
@@ -21,29 +30,29 @@ class ApplePayHandler: NSObject {
     var paymentRequest: JSPaymentRequest!
     var ogPaymentRequest: AnyObject!
     var resData: Data?
-    
+
     class func canMakePayments(jsNetworks: [String]) -> (canMakePayments: Bool, canSetupCards: Bool) {
         let networks = PluginUtils.castSupportedNetworksToEnum(networks: jsNetworks)
         return (PKPaymentAuthorizationController.canMakePayments(),  PKPaymentAuthorizationController.canMakePayments(usingNetworks: networks))
     }
-    
+
     func makePaymentRequest(jsMerchantValidation: AnyObject, jsAuthorization: AnyObject, jsRequest: AnyObject, onComplete: @escaping PaymentCompletionHandler) -> Bool {
         completionHandler = onComplete
-        
-        let merchant = PluginUtils.castMerchantValidationToClass(jsMerchantValidation: jsMerchantValidation)
-        let authorization = PluginUtils.castPaymentAuthorizationToClass(jsAuthorization: jsAuthorization)
-        let request = PluginUtils.castRequestToClass(jsRequest: jsRequest)
+
+        let merchant = JSMerchantValidation(fromJSMerchantValidation: jsMerchantValidation)
+        let authorization = JSPaymentAuthorization(jsAuthorization: jsAuthorization)
+        let request = JSPaymentRequest(jsRequest: jsRequest)
         ogPaymentRequest = jsRequest
-        
+
         var summaryItems = request.lineItems.map { (item) -> PKPaymentSummaryItem in
-            return PluginUtils.castToPKSummaryItem(item: item)
+            return PKPaymentSummaryItem(fromItem: item)
         }
-        summaryItems.append(PluginUtils.castToPKSummaryItem(item: request.total))
+        summaryItems.append(PKPaymentSummaryItem(fromItem: request.total))
         paymentSummaryItems = summaryItems
         authorizationUrl = authorization.url
         paymentRequest = request
         let capabilities = PluginUtils.castMerchantCapabilitiesToEnum(capabilities: request.merchantCapabilities)
-        
+
         // Build Payment Request Object
         let paymentRequest = PKPaymentRequest()
         paymentRequest.paymentSummaryItems = paymentSummaryItems
@@ -52,7 +61,7 @@ class ApplePayHandler: NSObject {
         paymentRequest.countryCode = request.countryCode
         paymentRequest.currencyCode = request.currencyCode
         paymentRequest.supportedNetworks = PluginUtils.castSupportedNetworksToEnum(networks: request.supportedNetworks)
-        
+
         // Display payment request
         paymentController = PKPaymentAuthorizationController(paymentRequest: paymentRequest)
         paymentController?.delegate = self
@@ -64,22 +73,20 @@ class ApplePayHandler: NSObject {
                 self.completionHandler(false, self.resData)
             }
         })
-        
+
         return true
     }
 }
 
 extension ApplePayHandler: PKPaymentAuthorizationControllerDelegate {
-    
+
     func paymentAuthorizationController(_ controller: PKPaymentAuthorizationController, didAuthorizePayment payment: PKPayment, handler completion: @escaping (PKPaymentAuthorizationResult) -> Void) {
-        
-        debugPrint("are we getting in here?")
         var errors = [Error]()
         var status = PKPaymentAuthorizationStatus.success
-        
+
         // Make HTTP Request with the information required for processing
         let url = URL(string: self.authorizationUrl!)!
-        let data = AuthorizationPaymentData(request: self.paymentRequest, token: PluginUtils.castPKPaymentTokenToClass(data: payment.token))
+        let data = AuthorizationPaymentData(request: self.paymentRequest, token: TokenData(data: payment.token))
         PluginUtils.httpPost(url: url, data: data, headers: [:], onHttpComplete: { response in
             debugPrint("http post complete")
             debugPrint(response)
@@ -94,7 +101,7 @@ extension ApplePayHandler: PKPaymentAuthorizationControllerDelegate {
             completion(PKPaymentAuthorizationResult(status: status, errors: errors))
         })
     }
-    
+
     func paymentAuthorizationControllerDidFinish(_ controller: PKPaymentAuthorizationController) {
         controller.dismiss {
             DispatchQueue.main.async {
@@ -106,7 +113,7 @@ extension ApplePayHandler: PKPaymentAuthorizationControllerDelegate {
             }
         }
     }
-    
+
     func paymentAuthorizationController(_ controller: PKPaymentAuthorizationController, didSelectPaymentMethod paymentMethod: PKPaymentMethod, handler completion: @escaping (PKPaymentRequestPaymentMethodUpdate) -> Void) {
         completion(PKPaymentRequestPaymentMethodUpdate(paymentSummaryItems: paymentSummaryItems))
         return

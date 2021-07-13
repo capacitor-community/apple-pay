@@ -7,12 +7,13 @@
 //
 
 import Foundation
+import PassKit
 
-class JSSummaryItem: Codable {
+struct JSSummaryItem : Codable {
     var label: String
     var amount: String
     var type: String?
-    
+
     init(label: String, amount: String, type: String?) {
         self.label = label
         self.amount = amount
@@ -20,12 +21,12 @@ class JSSummaryItem: Codable {
     }
 }
 
-class JSMerchantValidationParams {
+struct JSMerchantValidationParams {
     var merchantIdentifier: String
     var displayName: String
     var initiative: String
     var initiativeContext: String
-    
+
     init(merchantIdentifier: String, displayName: String, initiative: String, initiativeContext: String) {
         self.merchantIdentifier = merchantIdentifier
         self.displayName = displayName
@@ -34,83 +35,104 @@ class JSMerchantValidationParams {
     }
 }
 
-class JSMerchantValidation {
+struct JSMerchantValidation {
     var url: String
     var params: JSMerchantValidationParams
-    
-    init(url: String, params: JSMerchantValidationParams) {
-        self.url = url
-        self.params = params
+
+    init(fromJSMerchantValidation: AnyObject) {
+        url = fromJSMerchantValidation["url"] as? String ?? ""
+
+        let jsMerchantParams = fromJSMerchantValidation["params"] as! [String: String]
+
+        params = JSMerchantValidationParams(
+            merchantIdentifier: (jsMerchantParams["merchantIdentifier"] ?? ""),
+            displayName: (jsMerchantParams["displayName"] ?? ""),
+            initiative: (jsMerchantParams["initiative"] ?? ""),
+            initiativeContext: (jsMerchantParams["initiativeContext"] ?? ""))
     }
 }
 
-class JSPaymentAuthorization {
+struct JSPaymentAuthorization {
     var url: String
 
-    init(url: String) {
-        self.url = url;
+    init(jsAuthorization: AnyObject) {
+        url = jsAuthorization["url"] as? String ?? ""
     }
 }
 
-class JSPaymentRequest: Codable {
+struct JSPaymentRequest : Codable {
     var countryCode: String
     var currencyCode: String
     var merchantCapabilities: [String]
     var supportedNetworks: [String]
     var lineItems: [JSSummaryItem]
     var total: JSSummaryItem
-    
-    init(countryCode: String, currencyCode: String, merchantCapabilities: [String], supportedNetworks: [String], lineItems: [JSSummaryItem], total: JSSummaryItem) {
-        self.countryCode = countryCode
-        self.currencyCode = currencyCode
-        self.merchantCapabilities = merchantCapabilities
-        self.supportedNetworks = supportedNetworks
-        self.lineItems = lineItems
-        self.total = total
+
+    init(jsRequest: AnyObject) {
+        let jsTotalItem = jsRequest["total"] as! [String: String]
+        let jsLineItems = jsRequest["lineItems"] as! [[String: String]]
+
+        countryCode = jsRequest["countryCode"] as? String ?? ""
+        currencyCode = jsRequest["currencyCode"] as? String ?? ""
+        merchantCapabilities = jsRequest["merchantCapabilities"] as? [String] ?? []
+        supportedNetworks = jsRequest["supportedNetworks"] as? [String] ?? []
+
+        lineItems = jsLineItems.map { (item) -> JSSummaryItem in
+            return JSSummaryItem(
+                label: item["label"] ?? "",
+                amount: item["amount"] ?? "",
+                type: item["type"] ?? "")
+        }
+
+        total = JSSummaryItem(
+            label: jsTotalItem["label"] ?? "",
+            amount: jsTotalItem["amount"] ?? "",
+            type: jsTotalItem["type"] ?? ""
+        )
     }
 }
 
-class AuthorizationPaymentData: Codable {
+struct AuthorizationPaymentData : Codable {
     var request: JSPaymentRequest
     var token: TokenData
-    
+
     init(request: JSPaymentRequest, token: TokenData) {
         self.request = request
         self.token = token
     }
 }
 
-class TokenPaymentHeaderData: Codable {
+struct TokenPaymentHeaderData: Codable {
     var publicKeyHash: String
     var ephemeralPublicKey: String
     var transactionId: String
-    
-    init(publicKeyHash: String, ephemeralPublicKey: String, transactionId: String) {
-        self.publicKeyHash = publicKeyHash
-        self.ephemeralPublicKey = ephemeralPublicKey
-        self.transactionId = transactionId
+
+    init() {
+        publicKeyHash = ""
+        ephemeralPublicKey = ""
+        transactionId = ""
     }
 }
 
-class TokenPaymentData: Codable {
+struct TokenPaymentData: Codable {
     var data: String
     var signature: String
     var header: TokenPaymentHeaderData
     var version: String
-    
-    init(data: String, signature: String, header: TokenPaymentHeaderData, version: String) {
-        self.data = data
-        self.signature = signature
-        self.header = header
-        self.version = version
+
+    init() {
+        data = ""
+        signature = ""
+        header = TokenPaymentHeaderData()
+        version = ""
     }
 }
 
-class TokenPaymentMethod: Codable {
+struct TokenPaymentMethod: Codable {
     var displayName: String
     var network: String
     var type: String
-    
+
     init(displayName: String, network: String, type: String) {
         self.displayName = displayName
         self.type = type
@@ -118,15 +140,25 @@ class TokenPaymentMethod: Codable {
     }
 }
 
-class TokenData: Codable {
+struct TokenData: Codable {
     var paymentData:  TokenPaymentData
     var paymentMethod: TokenPaymentMethod
     var transactionIdentifier: String
-    
-    init(paymentData: TokenPaymentData, paymentMethod: TokenPaymentMethod, transactionIdentifier: String) {
-        self.paymentData = paymentData
-        self.paymentMethod = paymentMethod
-        self.transactionIdentifier = transactionIdentifier
+
+    init(data: PKPaymentToken) {
+        let decoder = JSONDecoder()
+        paymentData = TokenPaymentData()
+
+        if let parsedToken = try? decoder.decode(TokenPaymentData.self, from: data.paymentData) {
+            paymentData = parsedToken
+        }
+
+        paymentMethod = TokenPaymentMethod(
+            displayName: data.paymentMethod.displayName ?? "",
+            network: data.paymentMethod.network?.rawValue ?? "",
+            type: PluginUtils.pkPaymentMethodToString(val: data.paymentMethod.type)
+        )
+        transactionIdentifier = data.transactionIdentifier
     }
 }
 
@@ -135,12 +167,12 @@ class ApplePayHttpResponse {
     var success: Bool = true
     var errors = [Error]()
     var data: Data?
-    
+
     func addError(e: Error) -> Void {
         self.errors.append(e)
         self.success = false
     }
-    
+
     func clearErrors() -> Void {
         self.errors = []
         self.success = true
