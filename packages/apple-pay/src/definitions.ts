@@ -1,9 +1,3 @@
-declare module '@capacitor/core' {
-  interface PluginRegistry {
-    ApplePay: ApplePayPlugin;
-  }
-}
-
 export enum LogLevel {
   DEBUG,
   ERROR,

@@ -6,7 +6,7 @@ import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 
-@NativePlugin
+@CapacitorPlugin
 public class ApplePay extends Plugin {
 
     @PluginMethod

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
-import { Plugins, StatusBarStyle } from '@capacitor/core';
+import { StatusBar, Style } from '@capacitor/status-bar';
+import {SplashScreen } from '@capacitor/splash-screen';
 
 @Component({
   selector: 'app-root',
@@ -13,9 +14,8 @@ export class AppComponent {
   }
 
   initializeApp() {
-    const { SplashScreen, StatusBar } = Plugins;
     StatusBar.setStyle({
-      style: StatusBarStyle.Dark,
+      style: Style.Dark,
     });
     SplashScreen.hide();
   }

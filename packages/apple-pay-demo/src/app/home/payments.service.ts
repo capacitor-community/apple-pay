@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Plugins } from '@capacitor/core';
 import {
+  ApplePay,
   ApplePayMerchantCapabilities,
   ApplePaySummaryItem,
   ApplePaySupportedNetworks,
 } from '@ionic-enterprise/apple-pay';
 
-const { ApplePay } = Plugins;
 
 @Injectable({
   providedIn: 'root',

@@ -136,9 +136,11 @@ export class ApplePayWeb extends WebPlugin implements ApplePayPlugin {
   }
 }
 
-const ApplePay = new ApplePayWeb();
+
+import { registerPlugin } from '@capacitor/core';
+
+const ApplePay = registerPlugin<ApplePayPlugin>('ApplePay', {
+  web: () => import('./web').then(m => new m.ApplePayWeb())
+});
 
 export { ApplePay };
-
-import { registerWebPlugin } from '@capacitor/core';
-registerWebPlugin(ApplePay);

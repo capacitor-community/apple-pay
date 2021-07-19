@@ -12,13 +12,13 @@ public class ApplePay: CAPPlugin {
     var handlerRef: ApplePayHandler!
 
     @objc func setLogLevel(_ call: CAPPluginCall) {
-        call.success()
+        call.resolve()
     }
 
     @objc func canMakePayments(_ call: CAPPluginCall) {
         let networks = (call.getArray("supportedNetworks", String.self) ?? []) as [String]
         let canMakePayments = ApplePayHandler.canMakePayments(jsNetworks: networks)
-        call.success([
+        call.resolve([
             "canMakePayments": canMakePayments.canMakePayments && canMakePayments.canSetupCards
         ])
     }
@@ -36,11 +36,11 @@ public class ApplePay: CAPPlugin {
             if success {
                 do {
                     if let json = try JSONSerialization.jsonObject(with: data!, options: []) as? [String: Any] {
-                            call.success(["success": true, "data": json])
+                            call.resolve(["success": true, "data": json])
                         return
                     }
                 } catch {}
-                call.success([
+                call.resolve([
                     "success": true,
                     "data": nil
                 ])

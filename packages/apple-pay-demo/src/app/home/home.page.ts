@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-import { Plugins } from '@capacitor/core';
+
 import {
-  ApplePayMerchantCapabilities,
-  ApplePaySummaryItem,
-  ApplePaySupportedNetworks,
+  ApplePaySummaryItem
 } from '@ionic-enterprise/apple-pay';
 import { PaymentsService } from './payments.service';
 
