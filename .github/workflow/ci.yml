@@ -1,0 +1,85 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  setup:
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.0
+        with:
+          access_token: ${{ secrets.GITHUB_TOKEN }}
+  release-dev:
+    runs-on: macos-latest
+    timeout-minutes: 10
+    if: |
+      github.event_name == 'push' && github.ref == 'refs/heads/main' && !startsWith(github.event.head_commit.message, 'release:') &&
+      !(contains(github.event.head_commit.message, 'ci') || contains(github.event.head_commit.message, 'cd') || contains(github.event.head_commit.message, 'build') || contains(github.event.head_commit.message, 'tests') || contains(github.event.head_commit.message, 'internal'))
+    needs:
+      - setup
+    steps:
+      - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Restore Dependency Cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.OS }}-dependency-cache-${{ hashFiles('**/package.json') }}
+      - run: npm install --no-package-lock
+      - run: npm run lerna:publish:dev || true
+  release-beta:
+    runs-on: macos-latest
+    timeout-minutes: 10
+    if: |
+      github.event_name == 'push' && github.ref == 'refs/heads/beta' && startsWith(github.event.head_commit.message, 'release:') && contains(github.event.head_commit.message, 'beta') &&
+      !(contains(github.event.head_commit.message, 'ci') || contains(github.event.head_commit.message, 'cd') || contains(github.event.head_commit.message, 'build') || contains(github.event.head_commit.message, 'tests') || contains(github.event.head_commit.message, 'internal'))
+    needs:
+      - setup
+    steps:
+      - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Restore Dependency Cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.OS }}-dependency-cache-${{ hashFiles('**/package.json') }}
+      - run: npm install --no-package-lock
+      - run: npm run lerna:publish:beta || true
+  release-prod:
+    runs-on: macos-latest
+    timeout-minutes: 10
+    if: |
+      github.event_name == 'push' && github.ref == 'refs/heads/stable' && startsWith(github.event.head_commit.message, 'release:') && !contains(github.event.head_commit.message, 'beta') && !contains(github.event.head_commit.message, 'dev') &&
+      !(contains(github.event.head_commit.message, 'ci') || contains(github.event.head_commit.message, 'cd') || contains(github.event.head_commit.message, 'build') || contains(github.event.head_commit.message, 'tests') || contains(github.event.head_commit.message, 'internal'))
+    needs:
+      - setup
+    steps:
+      - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Restore Dependency Cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.OS }}-dependency-cache-${{ hashFiles('**/package.json') }}
+      - run: npm install --no-package-lock
+      - run: npm run lerna:publish:latest || true

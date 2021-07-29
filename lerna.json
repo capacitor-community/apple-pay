@@ -8,8 +8,21 @@
     "bootstrap": {
       "hoist": true
     },
+    "lint": {
+      "hoist": true
+    },
+    "fmt": {
+      "hoist": true
+    },
+    "test": {
+      "hoist": true
+    },
     "version": {
-      "message": "chore(release): %v"
+      "allowBranch": ["stable", "beta"],
+      "conventionalCommits": true,
+      "createRelease": "github",
+      "message": "release: %s",
+      "tagVersionPrefix": ""
     }
   }
 }
