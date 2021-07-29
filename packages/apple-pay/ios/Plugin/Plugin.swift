@@ -8,7 +8,7 @@ import PassKit
  */
 @objc(ApplePay)
 public class ApplePay: CAPPlugin {
-    
+
     var handlerRef: ApplePayHandler!
 
     @objc func setLogLevel(_ call: CAPPluginCall) {
@@ -34,16 +34,16 @@ public class ApplePay: CAPPlugin {
             jsRequest: requestData,
             onComplete: {(success, data) in
             if success {
-                do {
-                    if let json = try JSONSerialization.jsonObject(with: data!, options: []) as? [String: Any] {
+                if let data = data {
+                    do {
+                        if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
                             call.resolve(["success": true, "data": json])
-                        return
-                    }
-                } catch {}
-                call.resolve([
-                    "success": true,
-                    "data": nil
-                ])
+                            return
+                        }
+                    } catch {}
+                }
+
+                call.resolve(["success": true, "data": []])
             } else {
                 call.reject("Unable to complete payment")
             }

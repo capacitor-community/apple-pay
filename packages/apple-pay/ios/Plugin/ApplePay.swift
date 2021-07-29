@@ -28,7 +28,6 @@ class ApplePayHandler: NSObject {
     var completionHandler: PaymentCompletionHandler!
     var authorizationUrl: String?
     var paymentRequest: JSPaymentRequest!
-    var ogPaymentRequest: AnyObject!
     var resData: Data?
 
     class func canMakePayments(jsNetworks: [String]) -> (canMakePayments: Bool, canSetupCards: Bool) {
@@ -42,7 +41,6 @@ class ApplePayHandler: NSObject {
         let merchant = JSMerchantValidation(fromJSMerchantValidation: jsMerchantValidation)
         let authorization = JSPaymentAuthorization(jsAuthorization: jsAuthorization)
         let request = JSPaymentRequest(jsRequest: jsRequest)
-        ogPaymentRequest = jsRequest
 
         var summaryItems = request.lineItems.map { (item) -> PKPaymentSummaryItem in
             return PKPaymentSummaryItem(fromItem: item)
@@ -85,8 +83,8 @@ extension ApplePayHandler: PKPaymentAuthorizationControllerDelegate {
         var status = PKPaymentAuthorizationStatus.success
 
         // Make HTTP Request with the information required for processing
-        let url = URL(string: self.authorizationUrl!)!
-        let data = AuthorizationPaymentData(request: self.paymentRequest, token: TokenData(data: payment.token))
+        let url = URL(string: authorizationUrl!)!
+        let data = AuthorizationPaymentData(request: paymentRequest, token: TokenData(data: payment.token))
         PluginUtils.httpPost(url: url, data: data, headers: [:], onHttpComplete: { response in
             debugPrint("http post complete")
             debugPrint(response)
@@ -105,17 +103,12 @@ extension ApplePayHandler: PKPaymentAuthorizationControllerDelegate {
     func paymentAuthorizationControllerDidFinish(_ controller: PKPaymentAuthorizationController) {
         controller.dismiss {
             DispatchQueue.main.async {
-                if self.paymentStatus == .success {
-                    self.completionHandler!(true, self.resData)
-                } else {
-                    self.completionHandler!(false, self.resData)
-                }
+                self.completionHandler!(self.paymentStatus == .success, self.resData)
             }
         }
     }
 
     func paymentAuthorizationController(_ controller: PKPaymentAuthorizationController, didSelectPaymentMethod paymentMethod: PKPaymentMethod, handler completion: @escaping (PKPaymentRequestPaymentMethodUpdate) -> Void) {
         completion(PKPaymentRequestPaymentMethodUpdate(paymentSummaryItems: paymentSummaryItems))
-        return
     }
 }

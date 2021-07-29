@@ -168,13 +168,15 @@ class ApplePayHttpResponse {
     var errors = [Error]()
     var data: Data?
 
-    func addError(e: Error) -> Void {
+    func addError(e: Error, statusCode: Int = 400) -> Void {
         self.errors.append(e)
+        self.statusCode = statusCode
         self.success = false
     }
 
     func clearErrors() -> Void {
         self.errors = []
+        self.statusCode = 200
         self.success = true
     }
 }

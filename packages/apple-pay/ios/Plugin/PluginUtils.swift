@@ -37,7 +37,7 @@ enum PluginUtils {
             return .amex
         case "cartesBancaires":
             if #available(iOS 11.2, *) {
-                return .carteBancaires
+                return .cartesBancaires
             }
             fallthrough
         case "chinaUnionPay":
@@ -125,6 +125,7 @@ enum PluginUtils {
         headers: [String:String],
         onHttpComplete: @escaping (ApplePayHttpResponse) -> Void) -> Void {
         let result = ApplePayHttpResponse()
+        result.clearErrors()
 
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -133,7 +134,6 @@ enum PluginUtils {
         do {
             let encoder = JSONEncoder()
             request.httpBody = try encoder.encode(data)
-//            request.httpBody = data as Data
         } catch let e {
             result.addError(e: e)
             onHttpComplete(result)
@@ -142,11 +142,13 @@ enum PluginUtils {
 
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             debugPrint("HTTP RESPONSE")
+
             if error != nil {
                 result.addError(e: error!)
                 onHttpComplete(result)
                 return;
             }
+
             let res = response as! HTTPURLResponse
             result.statusCode = res.statusCode
             result.data = data

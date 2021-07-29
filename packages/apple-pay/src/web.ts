@@ -27,13 +27,6 @@ interface ApplePayJS {
 const logger = Logger.instance();
 
 export class ApplePayWeb extends WebPlugin implements ApplePayPlugin {
-  constructor() {
-    super({
-      name: 'ApplePay',
-      platforms: ['web'],
-    });
-  }
-
   private get ApplePaySession(): ApplePayJS {
     return (window as any).ApplePaySession;
   }
