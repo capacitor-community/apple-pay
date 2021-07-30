@@ -1,0 +1,5 @@
+{
+    "rewrites": [
+      { "source": "/docs/apple-pay/:match*", "destination": "/:match*" }
+    ]
+  }
