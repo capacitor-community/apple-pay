@@ -12,7 +12,7 @@ module.exports = {
   projectName: 'enterprise-apple-pay',
   titleDelimiter: '-',
   themeConfig: {
-    navbar: {      
+    navbar: {
       logo: {
         alt: 'Ionic Logo',
         src: 'img/logo.svg',
@@ -65,7 +65,7 @@ module.exports = {
               rel: null,
             },
           ],
-        },        
+        },
       ],
     },
     colorMode: {
@@ -79,10 +79,7 @@ module.exports = {
       additionalLanguages: ['shell-session'],
     },
   },
-  plugins: [
-    '@ionic-internal/docusaurus-plugin-tag-manager',
-    'docusaurus-plugin-sass',
-  ],
+  plugins: ['@ionic-internal/docusaurus-plugin-tag-manager', 'docusaurus-plugin-sass'],
   themes: ['@ionic-internal/docusaurus-theme'],
   presets: [
     [
