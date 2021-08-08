@@ -19,7 +19,7 @@
     "@ionic-internal/docusaurus-plugin-tag-manager": "2.0.0",
     "@ionic-internal/docusaurus-theme": "3.0.2",
     "@ionic-internal/ionic-ds": "^7.1.0",
-    "@ionic/prettier-config": "^1.0.1",
+    "@ionic/prettier-config": "^2.0.0",
     "@mdx-js/react": "^1.6.21",
     "@svgr/webpack": "^5.5.0",
     "clsx": "^1.1.1",
@@ -29,7 +29,7 @@
     "prism-react-renderer": "^1.2.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "sass": "^1.36.0",
+    "sass": "^1.37.5",
     "url-loader": "^4.1.1"
   },
   "browserslist": {
@@ -43,5 +43,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "prettier": "@ionic/prettier-config"
 }
