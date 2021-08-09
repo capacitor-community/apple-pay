@@ -1,12 +1,12 @@
 name: CI
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - "main"
       - "beta"
       - "stable"
-      - "dev"
 
 jobs:
   setup:
