@@ -21,7 +21,7 @@ jobs:
     runs-on: macos-latest
     timeout-minutes: 10
     if: |
-      github.event_name == 'push' && github.ref == 'refs/heads/dev' && !startsWith(github.event.head_commit.message, 'release:') &&
+      github.event_name == 'push' && github.ref == 'refs/heads/main' && !startsWith(github.event.head_commit.message, 'release:') &&
       !(contains(github.event.head_commit.message, 'ci') || contains(github.event.head_commit.message, 'cd') || contains(github.event.head_commit.message, 'build') || contains(github.event.head_commit.message, 'tests') || contains(github.event.head_commit.message, 'internal'))
     needs:
       - setup
