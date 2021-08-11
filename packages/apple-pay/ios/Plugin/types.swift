@@ -14,7 +14,7 @@ struct PaymentResult {
     var data: Data?
 }
 
-struct JSSummaryItem : Codable {
+struct JSSummaryItem: Codable {
     var label: String
     var amount: String
     var type: String?
@@ -65,7 +65,7 @@ struct JSPaymentAuthorization {
     }
 }
 
-struct JSPaymentRequest : Codable {
+struct JSPaymentRequest: Codable {
     var countryCode: String
     var currencyCode: String
     var merchantCapabilities: [String]
@@ -97,7 +97,7 @@ struct JSPaymentRequest : Codable {
     }
 }
 
-struct AuthorizationPaymentData : Codable {
+struct AuthorizationPaymentData: Codable {
     var request: JSPaymentRequest
     var token: TokenData
 
@@ -146,7 +146,7 @@ struct TokenPaymentMethod: Codable {
 }
 
 struct TokenData: Codable {
-    var paymentData:  TokenPaymentData
+    var paymentData: TokenPaymentData
     var paymentMethod: TokenPaymentMethod
     var transactionIdentifier: String
 
@@ -173,13 +173,13 @@ class ApplePayHttpResponse {
     var errors = [Error]()
     var data: Data?
 
-    func addError(e: Error, statusCode: Int = 400) -> Void {
+    func addError(e: Error, statusCode: Int = 400) {
         self.errors.append(e)
         self.statusCode = statusCode
         self.success = false
     }
 
-    func clearErrors() -> Void {
+    func clearErrors() {
         self.errors = []
         self.statusCode = 200
         self.success = true

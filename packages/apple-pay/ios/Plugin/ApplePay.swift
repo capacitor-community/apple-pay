@@ -32,7 +32,7 @@ class ApplePayHandler: NSObject {
 
     class func canMakePayments(jsNetworks: [String]) -> (canMakePayments: Bool, canSetupCards: Bool) {
         let networks = PluginUtils.castSupportedNetworksToEnum(networks: jsNetworks)
-        return (PKPaymentAuthorizationController.canMakePayments(),  PKPaymentAuthorizationController.canMakePayments(usingNetworks: networks))
+        return (PKPaymentAuthorizationController.canMakePayments(), PKPaymentAuthorizationController.canMakePayments(usingNetworks: networks))
     }
 
     func makePaymentRequest(jsMerchantValidation: AnyObject, jsAuthorization: AnyObject, jsRequest: AnyObject, onComplete: @escaping PaymentCompletionHandler) -> Bool {
@@ -80,7 +80,7 @@ extension ApplePayHandler: PKPaymentAuthorizationControllerDelegate {
 
     func paymentAuthorizationController(_ controller: PKPaymentAuthorizationController, didAuthorizePayment payment: PKPayment, handler completion: @escaping (PKPaymentAuthorizationResult) -> Void) {
         self.userCanceled = false
-        
+
         var errors = [Error]()
         var status = PKPaymentAuthorizationStatus.success
 

@@ -1,14 +1,13 @@
-import { WebPlugin } from '@capacitor/core';
-import {
+import { WebPlugin, registerPlugin } from '@capacitor/core';
+
+import { onPaymentAuthorized, onValidateMerchant } from './apple-pay-js-events';
+import type {
   ApplePayAvailablilityOptions,
-  ApplePayErrorCodes,
   ApplePayPaymentRequestResponse,
   ApplePayPlugin,
   ApplePayRequest,
-  getApplePayError,
-  LogLevel,
 } from './definitions';
-import { onPaymentAuthorized, onValidateMerchant } from './apple-pay-js-events';
+import { ApplePayErrorCodes, getApplePayError, LogLevel } from './definitions';
 import { Logger } from './logger';
 
 interface ApplePayJS {
@@ -36,10 +35,9 @@ export class ApplePayWeb extends WebPlugin implements ApplePayPlugin {
     try {
       this.checkApplePayJSAvailable();
       return {
-        canMakePayments:
-          await this.ApplePaySession.canMakePaymentsWithActiveCard(
-            options.merchantIdentifier,
-          ),
+        canMakePayments: await this.ApplePaySession.canMakePaymentsWithActiveCard(
+          options.merchantIdentifier,
+        ),
       };
     } catch (e) {
       logger.error('can make payments error', e);
@@ -142,8 +140,6 @@ export class ApplePayWeb extends WebPlugin implements ApplePayPlugin {
     return false;
   }
 }
-
-import { registerPlugin } from '@capacitor/core';
 
 const ApplePay = registerPlugin<ApplePayPlugin>('ApplePay', {
   web: () => import('./web').then(m => new m.ApplePayWeb()),

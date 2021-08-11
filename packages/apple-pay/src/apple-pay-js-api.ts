@@ -1,4 +1,4 @@
-import {
+import type {
   ApplePayMerchantValidation,
   ApplePayPaymentAuthorization,
   ApplePayPaymentRequest,
@@ -30,7 +30,7 @@ const post = async (path: string, data: any, errorMessage: string) => {
 export const performValidation = (
   validationUrl: string,
   validationData: ApplePayMerchantValidation,
-) => {
+): Promise<any> => {
   const data = {
     validationUrl:
       validationUrl ??
@@ -44,7 +44,7 @@ export const performApplePayAuthorization = (
   authorization: ApplePayPaymentAuthorization,
   request: ApplePayPaymentRequest,
   token: any,
-) => {
+): Promise<any> => {
   const data = {
     request,
     token,

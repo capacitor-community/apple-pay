@@ -30,7 +30,7 @@ export enum ApplePaySupportedNetworks {
 
 export interface ApplePayAvailablilityOptions {
   merchantIdentifier: string;
-  supportedNetworks: Array<string>;
+  supportedNetworks: string[];
 }
 
 export interface ApplePaySummaryItem {
@@ -60,7 +60,7 @@ export interface ApplePayPaymentRequest {
   currencyCode: string;
   merchantCapabilities: ApplePayMerchantCapabilities[];
   supportedNetworks: ApplePaySupportedNetworks[];
-  lineItems: Array<ApplePaySummaryItem>;
+  lineItems: ApplePaySummaryItem[];
   total: ApplePaySummaryItem;
 }
 

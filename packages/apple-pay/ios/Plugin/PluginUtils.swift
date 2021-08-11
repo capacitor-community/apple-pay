@@ -9,10 +9,9 @@
 import Foundation
 import PassKit
 
-
 enum PluginUtils {
 
-    static func log(statementToPrint: String, functionName: String = #function, line:Int = #line) {
+    static func log(statementToPrint: String, functionName: String = #function, line: Int = #line) {
         print("\(functionName) [line \(line)] \(statementToPrint)")
     }
 
@@ -89,7 +88,6 @@ enum PluginUtils {
         }
     }
 
-
     static func pkPaymentMethodToString(val: PKPaymentMethodType) -> String {
         switch val {
         case .credit:
@@ -122,8 +120,8 @@ enum PluginUtils {
     static func httpPost(
         url: URL,
         data: AuthorizationPaymentData,
-        headers: [String:String],
-        onHttpComplete: @escaping (ApplePayHttpResponse) -> Void) -> Void {
+        headers: [String: String],
+        onHttpComplete: @escaping (ApplePayHttpResponse) -> Void) {
         let result = ApplePayHttpResponse()
         result.clearErrors()
 
@@ -137,7 +135,7 @@ enum PluginUtils {
         } catch let e {
             result.addError(e: e)
             onHttpComplete(result)
-            return;
+            return
         }
 
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -146,7 +144,7 @@ enum PluginUtils {
             if error != nil {
                 result.addError(e: error!)
                 onHttpComplete(result)
-                return;
+                return
             }
 
             let res = response as! HTTPURLResponse
