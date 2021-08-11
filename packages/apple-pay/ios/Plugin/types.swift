@@ -9,6 +9,11 @@
 import Foundation
 import PassKit
 
+struct PaymentResult {
+    var success: Bool = false
+    var data: Data?
+}
+
 struct JSSummaryItem : Codable {
     var label: String
     var amount: String

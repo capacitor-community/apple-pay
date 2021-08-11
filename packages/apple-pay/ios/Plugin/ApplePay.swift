@@ -9,7 +9,7 @@
 import Foundation
 import PassKit
 
-typealias PaymentCompletionHandler = (Bool, Data?) -> Void
+typealias PaymentCompletionHandler = (Result<PaymentResult, ApplePayError>) -> Void
 
 extension PKPaymentSummaryItem {
     convenience init(fromItem: JSSummaryItem) {
@@ -21,7 +21,7 @@ extension PKPaymentSummaryItem {
 }
 
 class ApplePayHandler: NSObject {
-
+    var userCanceled: Bool = true
     var paymentController: PKPaymentAuthorizationController?
     var paymentStatus = PKPaymentAuthorizationStatus.failure
     var paymentSummaryItems = [PKPaymentSummaryItem]()
@@ -68,7 +68,7 @@ class ApplePayHandler: NSObject {
                 debugPrint("Presented payment controller")
             } else {
                 debugPrint("Failed to present payment controller")
-                self.completionHandler(false, self.resData)
+                self.completionHandler(.failure(.unhandledError("Failed to present payment controller")))
             }
         })
 
@@ -79,6 +79,8 @@ class ApplePayHandler: NSObject {
 extension ApplePayHandler: PKPaymentAuthorizationControllerDelegate {
 
     func paymentAuthorizationController(_ controller: PKPaymentAuthorizationController, didAuthorizePayment payment: PKPayment, handler completion: @escaping (PKPaymentAuthorizationResult) -> Void) {
+        self.userCanceled = false
+        
         var errors = [Error]()
         var status = PKPaymentAuthorizationStatus.success
 
@@ -103,7 +105,12 @@ extension ApplePayHandler: PKPaymentAuthorizationControllerDelegate {
     func paymentAuthorizationControllerDidFinish(_ controller: PKPaymentAuthorizationController) {
         controller.dismiss {
             DispatchQueue.main.async {
-                self.completionHandler!(self.paymentStatus == .success, self.resData)
+                if self.userCanceled {
+                    self.completionHandler(.failure(.userCanceled))
+                } else {
+                    let result = PaymentResult(success: self.paymentStatus == .success, data: self.resData)
+                    self.completionHandler(.success(result))
+                }
             }
         }
     }

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 
 import {
-  ApplePaySummaryItem
+  ApplePaySummaryItem,
+  ApplePayError,
 } from '@ionic-enterprise/apple-pay';
 import { PaymentsService } from './payments.service';
 
@@ -19,18 +20,22 @@ export class HomePage {
   }
 
   async paymentTest(): Promise<void> {
-    const items: ApplePaySummaryItem[] = new Array(5)
-      .fill(null)
-      .map((_, idx) => ({
-        amount: '1.00',
-        label: `Item ${idx}`,
-      }));
-    const total: ApplePaySummaryItem = {
-      amount: '5.00',
-      label: 'Total',
-      type: 'final',
-    };
-    const res = await this.payments.makePayment(items, total);
-    console.log('payment test', res);
+    try {
+      const items: ApplePaySummaryItem[] = new Array(5)
+        .fill(null)
+        .map((_, idx) => ({
+          amount: '1.00',
+          label: `Item ${idx}`,
+        }));
+      const total: ApplePaySummaryItem = {
+        amount: '5.00',
+        label: 'Total',
+        type: 'final',
+      };
+      const res = await this.payments.makePayment(items, total);
+      console.log('payment test', res);
+    } catch (err) {
+      console.log('Apple Pay Error: ', (err as ApplePayError).message);
+    }
   }
 }
