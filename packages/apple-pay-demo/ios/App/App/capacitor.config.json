@@ -1,5 +1,5 @@
 {
-	"appId": "com.dallastjames.ionic.applepaydemo",
+	"appId": "io.ionic.apple-pay-ng-test-app",
 	"appName": "apple-pay-demo",
 	"bundledWebRuntime": false,
 	"webDir": "www",
