@@ -35,9 +35,10 @@ export class ApplePayWeb extends WebPlugin implements ApplePayPlugin {
     try {
       this.checkApplePayJSAvailable();
       return {
-        canMakePayments: await this.ApplePaySession.canMakePaymentsWithActiveCard(
-          options.merchantIdentifier,
-        ),
+        canMakePayments:
+          await this.ApplePaySession.canMakePaymentsWithActiveCard(
+            options.merchantIdentifier,
+          ),
       };
     } catch (e) {
       logger.error('can make payments error', e);
