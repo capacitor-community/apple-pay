@@ -137,3 +137,10 @@ export class ApplePayWeb extends WebPlugin implements ApplePayPlugin {
     throw new Error(APPLE_PAY_NOT_AVAILABLE);
   }
 }
+
+import { registerPlugin } from '@capacitor/core';
+const ApplePayImpl = registerPlugin<ApplePayPlugin>('ApplePay', {
+  web: () => import('./web').then(m => new m.ApplePayWeb()),
+});
+
+export { ApplePayImpl };
