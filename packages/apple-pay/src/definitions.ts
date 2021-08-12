@@ -3,84 +3,257 @@ export enum LogLevel {
   ERROR,
 }
 
-export enum ApplePayMerchantCapabilities {
+/** Possible payment processing protocols and card types that you can accept through Apple Pay. */
+export enum ApplePayMerchantCapability {
+  /** Support the 3D Secure protocol */
   THREEDS = 'supports3DS',
+  /** Support for debit cards */
   DEBIT = 'supportsDebit',
+  /** Support for credit cards */
   CREDIT = 'supportsCredit',
+  /** Support for the EMV protocol */
   EMV = 'supportsEMV',
 }
 
-export enum ApplePaySupportedNetworks {
+/**
+ * The possible payment networks that you can accept through Apple Pay.
+ */
+export enum ApplePaySupportedNetwork {
+  /** American Express */
   AMEX = 'amex',
+  /** Cartes Bancaires */
   CARTESBANCAIRES = 'cartesBancaires',
+  /** China Union Pay */
   CHINAUNIONPAY = 'chinaUnionPay',
+  /** Discover Card */
   DISCOVER = 'discover',
+  /** Electronic funds transfer at point of sale */
   EFTPOS = 'eftpos',
+  /** Visa Electron */
   ELECTRON = 'electron',
+  /** Elo */
   ELO = 'elo',
+  /** Interac */
   INTERAC = 'interac',
+  /** Japan Credit Bureau */
   JCB = 'jcb',
+  /** Saudi Payments Network */
   MADA = 'mada',
+  /** Maestro Debit Card */
   MAESTRO = 'maestro',
+  /** Mastercard */
   MASTERCARD = 'masterCard',
+  /** Store credit and debit cards */
   PRIVATELABEL = 'privateLabel',
+  /** Visa */
   VISA = 'visa',
+  /** Visa vPay */
   VPAY = 'vPay',
 }
 
-export interface ApplePayAvailablilityOptions {
+/** A config object for {@link ApplePayPlugin.canMakePayments}  */
+export interface ApplePayAvailabilityOptions {
+  /**
+   * - Type: `string`
+   *
+   * The merchant identifier you registered with Apple for use with Apple Pay.
+   */
   merchantIdentifier: string;
-  supportedNetworks: Array<string>;
+  /**
+   * - Type: {@link ApplePaySupportedNetwork}
+   *
+   * An array of supported networks that will be supported.
+   */
+  supportedNetworks: ApplePaySupportedNetwork[];
 }
 
+/** An object that defines a line item in a payment request. */
 export interface ApplePaySummaryItem {
+  /**
+   * - Type: `string`
+   *
+   * The name of the line item (ex.: product name).
+   */
   label: string;
+  /**
+   * - Type: `string`
+   *
+   * The line item amount.
+   */
   amount: string;
+  /**
+   * - Type: `pending` | `final`
+   *
+   * Whether or not the line item represents a known final cost or an estimated or unknown cost.
+   *
+   * @default `undefined`
+   */
   type?: 'pending' | 'final';
 }
 
+/**
+ * An object containing request parameters for server-side merchant validation.
+ */
 export interface ApplePayMerchantValidationParams {
+  /**
+   * - Type: `string`
+   *
+   * The merchant identifier you registered with Apple for use with Apple Pay.
+   */
   merchantIdentifier: string;
+
+  /**
+   * - Type: `string`
+   *
+   * The display name of your store, UTF-8, unlocalized, with a max length of 64 characters.
+   */
   displayName: string;
+  /**
+   * - Type: `web` | `native`
+   *
+   * The type of the app making the request.
+   *
+   * The values for initiative and initiativeContext depend on the kind of application you’re building:
+   * - For Apple Pay on the web, use "web" for the initiative parameter. For the initiativeContext parameter, provide your fully qualified domain name associated with your Apple Pay Merchant Identity Certificate.
+   */
   initiative: 'web' | 'native';
+
+  /**
+   * - Type: `string`
+   *
+   * A value you provide based on the initiative.
+   */
   initiativeContext: string;
 }
 
+/**
+ * An object containing settings for connecting with your merchant validation server.
+ */
 export interface ApplePayMerchantValidation {
+  /**
+   * - Type: `string`
+   *
+   * The url to your merchant validation server. */
   url: string;
+
+  /**
+   * - Type: {@link ApplePayMerchantValidationParams}
+   *
+   * Additional params that will be POSTed to the the merchant validation server. */
   params: ApplePayMerchantValidationParams;
 }
 
+/**
+ * An object containing settings for connecting with your merchant payment authorization server.
+ */
 export interface ApplePayPaymentAuthorization {
+  /**
+   * - Type: `string`
+   *
+   * The url to your merchant payment authorization server.
+   */
   url: string;
 }
 
+/**
+ * An object describing the payment request, including information about payment processing capabilities, payment amounts and more.
+ */
 export interface ApplePayPaymentRequest {
+  /**
+   * - Type: `string`
+   *
+   * The merchant’s two-letter ISO 3166 country code.
+   */
   countryCode: string;
+
+  /**
+   * - Type: `string`
+   *
+   * The three-letter ISO 4217 currency code for the payment.
+   */
   currencyCode: string;
-  merchantCapabilities: ApplePayMerchantCapabilities[];
-  supportedNetworks: ApplePaySupportedNetworks[];
-  lineItems: Array<ApplePaySummaryItem>;
+
+  /**
+   * - Type: {@link ApplePayMerchantCapability}
+   *
+   * The payment capabilities supported by the merchant.
+   */
+  merchantCapabilities: ApplePayMerchantCapability[];
+
+  /**
+   * - Type: {@link ApplePaySupportedNetwork}
+   *
+   * The payment networks the merchant supports.
+   */
+  supportedNetworks: ApplePaySupportedNetwork[];
+
+  /**
+   * - Type: {@link ApplePaySummaryItem}
+   *
+   * A set of line items that explain recurring payments and additional charges and discounts.
+   */
+  lineItems: ApplePaySummaryItem[];
+
+  /**
+   * - Type: {@link ApplePaySummaryItem}
+   *
+   * A line item representing the total for the payment.
+   */
   total: ApplePaySummaryItem;
 }
 
 export interface ApplePayRequest {
+  /**
+   * - Type: `1` | `2` | `3` | `4` | `5`
+   *
+   * The version of Apple Pay the app supports.
+   */
   version: 1 | 2 | 3 | 4 | 5;
+
+  /**
+   * - Type: {@link ApplePayMerchantValidation}
+   *
+   * An object containing merchant validation settings.
+   */
   merchantValidation: ApplePayMerchantValidation;
+
+  /**
+   * - Type: {@link ApplePayPaymentAuthorization}
+   *
+   * An object containing merchant payment authorization settings.
+   */
   paymentAuthorization: ApplePayPaymentAuthorization;
+
+  /**
+   * - Type: {@link ApplePayPaymentRequest}
+   *
+   * The payment request object.
+   */
   request: ApplePayPaymentRequest;
 }
 
+/** The response object from {@link ApplePayPlugin.makePaymentRequest} */
 export interface ApplePayPaymentRequestResponse {
+  /**
+   * - Type: `boolean`
+   *
+   * Whether or not the payment request was successful. */
   success: boolean;
+
+  /**
+   * - Type: `any`
+   *
+   * The data response from the merchant validation server. */
   data?: any;
 }
 
-export interface ApplePayPlugin {
+export interface ApplePay {
   setLogLevel: (level: LogLevel) => void;
+  /** Checks if the device supports Apple Pay based on the supplied options, and can make payments */
   canMakePayments: (
-    options: ApplePayAvailablilityOptions,
+    options: ApplePayAvailabilityOptions,
   ) => Promise<{ canMakePayments: boolean }>;
+  /** Attempts to make request payment by presenting the payment sheet over the app. */
   makePaymentRequest: (
     request: ApplePayRequest,
   ) => Promise<ApplePayPaymentRequestResponse>;

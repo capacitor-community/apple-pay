@@ -13,6 +13,7 @@ module.exports = {
   titleDelimiter: '-',
   themeConfig: {
     navbar: {
+      title: 'Apple Pay',
       logo: {
         alt: 'Ionic Logo',
         src: 'img/logo.svg',

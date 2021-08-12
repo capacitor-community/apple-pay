@@ -18,7 +18,9 @@
     "build": "npm run clean && tsc && rollup -c rollup.config.js",
     "clean": "rimraf ./dist",
     "watch": "tsc --watch",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "remove-void-implements": "node ../../scripts/remove-void-implements.js",
+    "docs": "typedoc --plugin typedoc-plugin-markdown --theme ./node_modules/@ionic/markdown-docs-theme/dist src/index.ts && rm -rf ../../website/docs/{enums,interfaces,classes} && mv api/{enums,interfaces,classes} ../../website/docs && mv api/modules.md ../../website/docs/modules.md && rm -rf api"
   },
   "devDependencies": {
     "@capacitor/android": "^3.1.1",
@@ -27,12 +29,15 @@
     "@ionic/prettier-config": "^1.0.0",
     "@ionic/swiftlint-config": "^1.0.0",
     "@rollup/plugin-node-resolve": "^8.1.0",
+    "@ionic/markdown-docs-theme": "^3.0.1",
     "prettier": "^2.0.5",
     "prettier-plugin-java": "^0.8.0",
     "rimraf": "^3.0.0",
     "rollup": "^2.21.0",
     "swiftlint": "^1.0.1",
-    "typescript": "~3.8.3"
+    "typescript": "~4.0.2",
+    "typedoc": "^0.20.30",
+    "typedoc-plugin-markdown": "3.6.0"
   },
   "peerDependencies": {
     "@capacitor/core": "^3.1.1"
