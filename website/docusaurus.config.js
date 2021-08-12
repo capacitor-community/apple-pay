@@ -7,7 +7,7 @@ module.exports = {
   baseUrlIssueBanner: false,
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
-  favicon: 'img/apple-pay-icon.svg',
+  favicon: 'img/favicon.ico',
   organizationName: 'ionic-team',
   projectName: 'enterprise-apple-pay',
   titleDelimiter: '-',
