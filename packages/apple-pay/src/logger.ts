@@ -1,8 +1,6 @@
 export class Logger {
   private static _instance: Logger | undefined;
-  private isEnabled: boolean = false;
-
-  private constructor() {}
+  private isEnabled = false;
 
   public static instance(): Logger {
     if (!Logger._instance) {

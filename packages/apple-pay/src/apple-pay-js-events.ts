@@ -1,12 +1,12 @@
 import {
+  performApplePayAuthorization,
+  performValidation,
+} from './apple-pay-js-api';
+import type {
   ApplePayMerchantValidation,
   ApplePayPaymentAuthorization,
   ApplePayPaymentRequest,
 } from './definitions';
-import {
-  performApplePayAuthorization,
-  performValidation,
-} from './apple-pay-js-api';
 
 interface ValidateActions {
   onSuccess: (res: any) => void;

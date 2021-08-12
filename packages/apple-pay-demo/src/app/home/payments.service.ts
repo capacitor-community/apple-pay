@@ -6,7 +6,6 @@ import {
   ApplePaySupportedNetworks,
 } from '@ionic-enterprise/apple-pay';
 
-
 @Injectable({
   providedIn: 'root',
 })

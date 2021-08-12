@@ -30,7 +30,7 @@ export enum ApplePaySupportedNetworks {
 
 export interface ApplePayAvailablilityOptions {
   merchantIdentifier: string;
-  supportedNetworks: Array<string>;
+  supportedNetworks: string[];
 }
 
 export interface ApplePaySummaryItem {
@@ -60,7 +60,7 @@ export interface ApplePayPaymentRequest {
   currencyCode: string;
   merchantCapabilities: ApplePayMerchantCapabilities[];
   supportedNetworks: ApplePaySupportedNetworks[];
-  lineItems: Array<ApplePaySummaryItem>;
+  lineItems: ApplePaySummaryItem[];
   total: ApplePaySummaryItem;
 }
 
@@ -84,4 +84,50 @@ export interface ApplePayPlugin {
   makePaymentRequest: (
     request: ApplePayRequest,
   ) => Promise<ApplePayPaymentRequestResponse>;
+}
+
+export enum ApplePayErrorCodes {
+  Unknown,
+  ApplePayNotAvailable,
+  ApplePayUnableToOpenSession,
+  ApplePayMerchantValidationFailed,
+  ApplePayAuthorizationFailed,
+  ApplePayCanceled,
+}
+
+export interface ApplePayError {
+  message: string;
+  code: ApplePayErrorCodes;
+}
+
+export function getApplePayError(
+  code: ApplePayErrorCodes,
+  error?: Error,
+): ApplePayError {
+  let message = '';
+  switch (code) {
+    case ApplePayErrorCodes.ApplePayNotAvailable:
+      message =
+        'Apple Pay JS is not available. Check that your domain has been correctly validated, has the correct certificates, and that you are running on a compatible iOS device';
+      break;
+    case ApplePayErrorCodes.ApplePayUnableToOpenSession:
+      message = 'Unable to open new Apple Pay Session';
+      break;
+    case ApplePayErrorCodes.ApplePayMerchantValidationFailed:
+      message = 'Merchant validation failed';
+      break;
+    case ApplePayErrorCodes.ApplePayAuthorizationFailed:
+      message = 'Payment authorization failed';
+      break;
+    case ApplePayErrorCodes.ApplePayCanceled:
+      message = 'User Canceled';
+      break;
+    default:
+      message = `Unhandled Error: ${error?.message}`;
+      break;
+  }
+  return {
+    message,
+    code,
+  };
 }
