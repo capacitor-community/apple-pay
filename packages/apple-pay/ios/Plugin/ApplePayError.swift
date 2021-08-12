@@ -29,9 +29,11 @@ public func getApplePayErrorObject(_ error: Error) -> ApplePayErrorObject {
     case ApplePayError.notAvailable:
         return ApplePayErrorObject(
             1,
-            """Apple Pay JS is not available.
-            Check that your domain has been correctly validated, has the correct certificates,
-      and that you are running on a compatible iOS device"""
+            """
+      Apple Pay JS is not available.
+      Check that your domain has been correctly validated, has the correct certificates,
+      and that you are running on a compatible iOS device
+      """
         )
     case ApplePayError.unableToOpenSession:
         return ApplePayErrorObject(2, "Unable to open new Apple Pay Session")

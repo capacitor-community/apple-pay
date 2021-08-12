@@ -121,7 +121,8 @@ enum PluginUtils {
         url: URL,
         data: AuthorizationPaymentData,
         headers: [String: String],
-        onHttpComplete: @escaping (ApplePayHttpResponse) -> Void) {
+        onHttpComplete: @escaping (ApplePayHttpResponse) -> Void
+    ) {
         let result = ApplePayHttpResponse()
         result.clearErrors()
 
@@ -132,8 +133,8 @@ enum PluginUtils {
         do {
             let encoder = JSONEncoder()
             request.httpBody = try encoder.encode(data)
-        } catch let e {
-            result.addError(e: e)
+        } catch let err {
+            result.addError(err: err)
             onHttpComplete(result)
             return
         }
@@ -141,16 +142,23 @@ enum PluginUtils {
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             debugPrint("HTTP RESPONSE")
 
-            if error != nil {
-                result.addError(e: error!)
+            if let error = error {
+                result.addError(err: error)
                 onHttpComplete(result)
                 return
             }
 
-            let res = response as! HTTPURLResponse
-            result.statusCode = res.statusCode
-            result.data = data
+            if let res = response as? HTTPURLResponse {
+                result.statusCode = res.statusCode
+                result.data = data
+                onHttpComplete(result)
+                return
+            }
+
+            result.addError(err: ApplePayError.unhandledError("could not cast HTTPURLResponse"))
             onHttpComplete(result)
+            return
+
         }
 
         task.resume()
