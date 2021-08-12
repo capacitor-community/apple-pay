@@ -2,7 +2,7 @@
 title: ApplePayPaymentRequestResponse
 ---
 
-The response object from {@link ApplePayPlugin.makePaymentRequest}
+The response object from [ApplePay.makePaymentRequest](../classes/applepay#makepaymentrequest)
 
 ## Properties
 

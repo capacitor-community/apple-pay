@@ -2,7 +2,7 @@
 title: ApplePayAvailabilityOptions
 ---
 
-A config object for {@link ApplePayPlugin.canMakePayments}
+A config object for [ApplePay.canMakePayments](../classes/applepay#canmakepayments)
 
 ## Properties
 

@@ -1,5 +1,8 @@
+/** Options for setting the verbosity of console logging. */
 export enum LogLevel {
+  /** Log events that may be useful during development. */
   DEBUG,
+  /** Only log errors. */
   ERROR,
 }
 
@@ -51,7 +54,7 @@ export enum ApplePaySupportedNetwork {
   VPAY = 'vPay',
 }
 
-/** A config object for {@link ApplePayPlugin.canMakePayments}  */
+/** A config object for {@link ApplePay.canMakePayments}  */
 export interface ApplePayAvailabilityOptions {
   /**
    * - Type: `string`
@@ -232,7 +235,7 @@ export interface ApplePayRequest {
   request: ApplePayPaymentRequest;
 }
 
-/** The response object from {@link ApplePayPlugin.makePaymentRequest} */
+/** The response object from {@link ApplePay.makePaymentRequest} */
 export interface ApplePayPaymentRequestResponse {
   /**
    * - Type: `boolean`
@@ -247,13 +250,53 @@ export interface ApplePayPaymentRequestResponse {
   data?: any;
 }
 
-export interface ApplePay {
+/** The response object from {@link ApplePay.canMakePayments} */
+export interface ApplePayCanMakePaymentResponse {
+  /**
+   * - Type: `boolean`
+   *
+   * Whether or not the device can make payments.
+   */
+  canMakePayments: boolean;
+}
+
+export interface ApplePayPlugin {
+  /**
+   * Set the verbosity of event logging.
+   */
   setLogLevel: (level: LogLevel) => void;
-  /** Checks if the device supports Apple Pay based on the supplied options, and can make payments */
+
+  /**
+   *
+   * Checks if the device supports Apple Pay and can make payments, based on the supplied options.
+   *
+   * @usage
+   * ```typescript
+   * const { canMakePayments } = await ApplePay.canMakePayments({
+   *  merchantIdentifier: merchantIdentifier,
+   *  supportedNetworks: supportedNetworks,
+   * });
+   * if (canMakePayments) {
+   *  // start building a payment request...
+   * }
+   * ```
+   */
   canMakePayments: (
     options: ApplePayAvailabilityOptions,
-  ) => Promise<{ canMakePayments: boolean }>;
-  /** Attempts to make request payment by presenting the payment sheet over the app. */
+  ) => Promise<ApplePayCanMakePaymentResponse>;
+
+  /**
+   * Attempts to make request payment by presenting the payment sheet over the app.
+   *
+   * @usage
+   * ```typescript
+   * const request: ApplePayRequest = {...}
+   * const { success } = await ApplePay.makePaymentRequest(request);
+   * if (success) {
+   *  alert("Payment successful!");
+   * }
+   * ```
+   */
   makePaymentRequest: (
     request: ApplePayRequest,
   ) => Promise<ApplePayPaymentRequestResponse>;
