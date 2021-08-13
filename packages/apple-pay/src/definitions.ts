@@ -303,19 +303,55 @@ export interface ApplePayPlugin {
 }
 
 export enum ApplePayErrorCodes {
+  /**
+   * An unknown error happened.
+   * @constant `0`
+   */
   Unknown,
+  /**
+   * Apple Pay is not enabled on this device.
+   * @constant `1`
+   */
   ApplePayNotAvailable,
+  /**
+   * A failure occurred while trying to start an ApplePayJS session.
+   * @constant `2`
+   */
   ApplePayUnableToOpenSession,
+  /**
+   * A failure occurred during merchant validation.
+   * @constant `3`
+   */
   ApplePayMerchantValidationFailed,
+  /**
+   * A failure occurred during payment authorization.
+   * @constant `4`
+   */
   ApplePayAuthorizationFailed,
+  /**
+   * The user canceled the payment request.
+   * @constant `5`
+   */
   ApplePayCanceled,
 }
 
+/** An error that can be thrown by the plugin. */
 export interface ApplePayError {
+  /**
+   * - Type: `string`
+   *
+   * A text description of the error that occurred.
+   */
   message: string;
+  /**
+   * - Type: {@link ApplePayErrorCodes}
+   *
+   * The error code enum representing the error.
+   */
   code: ApplePayErrorCodes;
 }
 
+/** @ignore */
 export function getApplePayError(
   code: ApplePayErrorCodes,
   error?: Error,

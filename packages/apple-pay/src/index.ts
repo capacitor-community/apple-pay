@@ -1,5 +1,7 @@
 export {
   LogLevel,
+  ApplePayError,
+  ApplePayErrorCodes,
   ApplePayMerchantCapability,
   ApplePaySupportedNetwork,
   ApplePayAvailabilityOptions,
