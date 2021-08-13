@@ -12,7 +12,7 @@ export {
   ApplePayPaymentRequest,
   ApplePayRequest,
   ApplePayPaymentRequestResponse,
-  ApplePayCanMakePaymentResponse,
+  ApplePayCanMakePaymentsResponse,
 } from './definitions';
 
 export * from './applepay';

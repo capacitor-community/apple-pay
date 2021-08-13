@@ -4,7 +4,7 @@ title: ApplePayErrorCodes
 
 ## Enumeration members
 
-### ApplePayAuthorizationFailed
+### AuthorizationFailed
 
 A failure occurred during payment authorization.
 
@@ -14,17 +14,7 @@ A failure occurred during payment authorization.
  `4`
  
 
-### ApplePayCanceled
-
-The user canceled the payment request.
-
-#### Constant
-
-        
- `5`
- 
-
-### ApplePayMerchantValidationFailed
+### MerchantValidationFailed
 
 A failure occurred during merchant validation.
 
@@ -34,7 +24,7 @@ A failure occurred during merchant validation.
  `3`
  
 
-### ApplePayNotAvailable
+### NotAvailable
 
 Apple Pay is not enabled on this device.
 
@@ -44,7 +34,7 @@ Apple Pay is not enabled on this device.
  `1`
  
 
-### ApplePayUnableToOpenSession
+### UnableToOpenSession
 
 A failure occurred while trying to start an ApplePayJS session.
 
@@ -62,3 +52,13 @@ An unknown error happened.
 
         
  `0`
+ 
+
+### UserCanceled
+
+The user canceled the payment request.
+
+#### Constant
+
+        
+ `5`

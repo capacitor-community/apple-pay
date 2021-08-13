@@ -29,7 +29,7 @@ Name | Type |
 :------ | :------ |
 `options` | [*ApplePayAvailabilityOptions*](../interfaces/applepayavailabilityoptions) |
 
-**Returns:** <span class="return-code">*Promise*<[*ApplePayCanMakePaymentResponse*](../interfaces/applepaycanmakepaymentresponse)\></span>
+**Returns:** <span class="return-code">*Promise*<[*ApplePayCanMakePaymentsResponse*](../interfaces/applepaycanmakepaymentsresponse)\></span>
 
 ### makePaymentRequest
 

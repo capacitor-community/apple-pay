@@ -4,6 +4,28 @@ title: ApplePayError
 
 An error that can be thrown by the plugin.
 
+#### Usage
+
+        
+ 
+```typescript
+try {
+ const result = await ApplePay.makePaymentRequest(paymentRequest);
+} catch (err) {
+ switch (err.code) {
+   case ApplePayErrorCodes.UserCanceled:
+     console.log('user canceled the transaction');
+     break;
+   case ApplePayErrorCodes.AuthorizationFailed:
+     console.log("the payment authorization failed");
+     break
+   default:
+     throw err;
+  }
+}
+```
+ 
+
 ## Properties
 
 ### code

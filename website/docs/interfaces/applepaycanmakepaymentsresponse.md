@@ -1,5 +1,5 @@
 ---
-title: ApplePayCanMakePaymentResponse
+title: ApplePayCanMakePaymentsResponse
 ---
 
 The response object from [ApplePay.canMakePayments](../classes/applepay#canmakepayments)

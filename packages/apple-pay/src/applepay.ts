@@ -1,7 +1,7 @@
 import type {
   LogLevel,
   ApplePayAvailabilityOptions,
-  ApplePayCanMakePaymentResponse,
+  ApplePayCanMakePaymentsResponse,
   ApplePayRequest,
   ApplePayPaymentRequestResponse,
 } from './definitions';
@@ -36,7 +36,7 @@ export class ApplePay {
    */
   public static canMakePayments(
     options: ApplePayAvailabilityOptions,
-  ): Promise<ApplePayCanMakePaymentResponse> {
+  ): Promise<ApplePayCanMakePaymentsResponse> {
     return ApplePayImpl.canMakePayments(options);
   }
 

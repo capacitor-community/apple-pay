@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import {
   ApplePaySummaryItem,
   ApplePayError,
+  ApplePayErrorCodes,
 } from '@ionic-enterprise/apple-pay';
 import { PaymentsService } from './payments.service';
 
@@ -35,7 +36,13 @@ export class HomePage {
       const res = await this.payments.makePayment(items, total);
       console.log('payment test', res);
     } catch (err) {
-      console.log('Apple Pay Error: ', (err as ApplePayError).message);
+      switch (err.code) {
+        case ApplePayErrorCodes.UserCanceled:
+          console.log('user canceled the transaction');
+          break;
+        default:
+          console.error(err);
+      }
     }
   }
 }

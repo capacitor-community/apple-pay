@@ -251,7 +251,7 @@ export interface ApplePayPaymentRequestResponse {
 }
 
 /** The response object from {@link ApplePay.canMakePayments} */
-export interface ApplePayCanMakePaymentResponse {
+export interface ApplePayCanMakePaymentsResponse {
   /**
    * - Type: `boolean`
    *
@@ -283,7 +283,7 @@ export interface ApplePayPlugin {
    */
   canMakePayments: (
     options: ApplePayAvailabilityOptions,
-  ) => Promise<ApplePayCanMakePaymentResponse>;
+  ) => Promise<ApplePayCanMakePaymentsResponse>;
 
   /**
    * Attempts to make request payment by presenting the payment sheet over the app.
@@ -312,30 +312,50 @@ export enum ApplePayErrorCodes {
    * Apple Pay is not enabled on this device.
    * @constant `1`
    */
-  ApplePayNotAvailable,
+  NotAvailable,
   /**
    * A failure occurred while trying to start an ApplePayJS session.
    * @constant `2`
    */
-  ApplePayUnableToOpenSession,
+  UnableToOpenSession,
   /**
    * A failure occurred during merchant validation.
    * @constant `3`
    */
-  ApplePayMerchantValidationFailed,
+  MerchantValidationFailed,
   /**
    * A failure occurred during payment authorization.
    * @constant `4`
    */
-  ApplePayAuthorizationFailed,
+  AuthorizationFailed,
   /**
    * The user canceled the payment request.
    * @constant `5`
    */
-  ApplePayCanceled,
+  UserCanceled,
 }
 
-/** An error that can be thrown by the plugin. */
+/**
+ * An error that can be thrown by the plugin.
+ *
+ * @usage
+ * ```typescript
+ * try {
+ *  const result = await ApplePay.makePaymentRequest(paymentRequest);
+ * } catch (err) {
+ *  switch (err.code) {
+ *    case ApplePayErrorCodes.UserCanceled:
+ *      console.log('user canceled the transaction');
+ *      break;
+ *    case ApplePayErrorCodes.AuthorizationFailed:
+ *      console.log("the payment authorization failed");
+ *      break
+ *    default:
+ *      throw err;
+ *   }
+ * }
+ * ```
+ */
 export interface ApplePayError {
   /**
    * - Type: `string`
@@ -358,20 +378,20 @@ export function getApplePayError(
 ): ApplePayError {
   let message = '';
   switch (code) {
-    case ApplePayErrorCodes.ApplePayNotAvailable:
+    case ApplePayErrorCodes.NotAvailable:
       message =
         'Apple Pay JS is not available. Check that your domain has been correctly validated, has the correct certificates, and that you are running on a compatible iOS device';
       break;
-    case ApplePayErrorCodes.ApplePayUnableToOpenSession:
+    case ApplePayErrorCodes.UnableToOpenSession:
       message = 'Unable to open new Apple Pay Session';
       break;
-    case ApplePayErrorCodes.ApplePayMerchantValidationFailed:
+    case ApplePayErrorCodes.MerchantValidationFailed:
       message = 'Merchant validation failed';
       break;
-    case ApplePayErrorCodes.ApplePayAuthorizationFailed:
+    case ApplePayErrorCodes.AuthorizationFailed:
       message = 'Payment authorization failed';
       break;
-    case ApplePayErrorCodes.ApplePayCanceled:
+    case ApplePayErrorCodes.UserCanceled:
       message = 'User Canceled';
       break;
     default:
