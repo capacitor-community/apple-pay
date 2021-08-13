@@ -1,11 +1,9 @@
-import Foundation
 import Capacitor
+import Foundation
 import PassKit
 
-/**
- * Please read the Capacitor iOS Plugin Development Guide
- * here: https://capacitorjs.com/docs/plugins/ios
- */
+/// Please read the Capacitor iOS Plugin Development Guide
+/// here: https://capacitorjs.com/docs/plugins/ios
 @objc(ApplePay)
 public class ApplePay: CAPPlugin {
 
@@ -32,21 +30,37 @@ public class ApplePay: CAPPlugin {
             jsMerchantValidation: merchantValidation,
             jsAuthorization: paymentAuthorization,
             jsRequest: requestData,
-            onComplete: {(success, data) in
-            if success {
-                if let data = data {
-                    do {
-                        if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-                            call.resolve(["success": true, "data": json])
-                            return
+            onComplete: { result in
+                switch result {
+                case .failure(let err):
+                    self.sendError(call, err)
+                    return
+                case .success(let paymentResult):
+                    if paymentResult.success {
+                        if let data = paymentResult.data {
+                            do {
+                                if let json = try JSONSerialization.jsonObject(with: data, options: [])
+                                    as? [String: Any] {
+                                    call.resolve(["success": true, "data": json])
+                                    return
+                                }
+                            } catch {}
                         }
-                    } catch {}
-                }
 
-                call.resolve(["success": true, "data": []])
-            } else {
-                call.reject("Unable to complete payment")
-            }
-        })
+                        call.resolve(["success": true, "data": []])
+                    } else {
+                        // return error
+                        self.sendError(call, ApplePayError.unhandledError("Unable to complete payment"))
+                        return
+                    }
+                }
+            })
+    }
+
+    private func sendError(_ call: CAPPluginCall, _ error: Error) {
+        let customError = getApplePayErrorObject(error)
+        call.reject(
+            customError.message, String(customError.code), error,
+            customError.asDictionary as PluginCallResultData)
     }
 }

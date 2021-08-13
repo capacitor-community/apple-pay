@@ -9,7 +9,12 @@
 import Foundation
 import PassKit
 
-struct JSSummaryItem : Codable {
+struct PaymentResult {
+    var success: Bool = false
+    var data: Data?
+}
+
+struct JSSummaryItem: Codable {
     var label: String
     var amount: String
     var type: String?
@@ -27,7 +32,9 @@ struct JSMerchantValidationParams {
     var initiative: String
     var initiativeContext: String
 
-    init(merchantIdentifier: String, displayName: String, initiative: String, initiativeContext: String) {
+    init(
+        merchantIdentifier: String, displayName: String, initiative: String, initiativeContext: String
+    ) {
         self.merchantIdentifier = merchantIdentifier
         self.displayName = displayName
         self.initiative = initiative
@@ -39,10 +46,12 @@ struct JSMerchantValidation {
     var url: String
     var params: JSMerchantValidationParams
 
-    init(fromJSMerchantValidation: AnyObject) {
+    init(fromJSMerchantValidation: AnyObject) throws {
         url = fromJSMerchantValidation["url"] as? String ?? ""
 
-        let jsMerchantParams = fromJSMerchantValidation["params"] as! [String: String]
+        guard let jsMerchantParams = fromJSMerchantValidation["params"] as? [String: String] else {
+            throw ApplePayError.unhandledError("could not cast params to dictionary")
+        }
 
         params = JSMerchantValidationParams(
             merchantIdentifier: (jsMerchantParams["merchantIdentifier"] ?? ""),
@@ -60,7 +69,7 @@ struct JSPaymentAuthorization {
     }
 }
 
-struct JSPaymentRequest : Codable {
+struct JSPaymentRequest: Codable {
     var countryCode: String
     var currencyCode: String
     var merchantCapabilities: [String]
@@ -68,9 +77,14 @@ struct JSPaymentRequest : Codable {
     var lineItems: [JSSummaryItem]
     var total: JSSummaryItem
 
-    init(jsRequest: AnyObject) {
-        let jsTotalItem = jsRequest["total"] as! [String: String]
-        let jsLineItems = jsRequest["lineItems"] as! [[String: String]]
+    init(jsRequest: AnyObject) throws {
+        guard let jsTotalItem = jsRequest["total"] as? [String: String] else {
+            throw ApplePayError.unhandledError("could not cast total to dictionary")
+        }
+
+        guard let jsLineItems = jsRequest["lineItems"] as? [[String: String]] else {
+            throw ApplePayError.unhandledError("could not cast lineItems to dictionary")
+        }
 
         countryCode = jsRequest["countryCode"] as? String ?? ""
         currencyCode = jsRequest["currencyCode"] as? String ?? ""
@@ -92,7 +106,7 @@ struct JSPaymentRequest : Codable {
     }
 }
 
-struct AuthorizationPaymentData : Codable {
+struct AuthorizationPaymentData: Codable {
     var request: JSPaymentRequest
     var token: TokenData
 
@@ -141,7 +155,7 @@ struct TokenPaymentMethod: Codable {
 }
 
 struct TokenData: Codable {
-    var paymentData:  TokenPaymentData
+    var paymentData: TokenPaymentData
     var paymentMethod: TokenPaymentMethod
     var transactionIdentifier: String
 
@@ -168,13 +182,13 @@ class ApplePayHttpResponse {
     var errors = [Error]()
     var data: Data?
 
-    func addError(e: Error, statusCode: Int = 400) -> Void {
-        self.errors.append(e)
+    func addError(err: Error, statusCode: Int = 400) {
+        self.errors.append(err)
         self.statusCode = statusCode
         self.success = false
     }
 
-    func clearErrors() -> Void {
+    func clearErrors() {
         self.errors = []
         self.statusCode = 200
         self.success = true

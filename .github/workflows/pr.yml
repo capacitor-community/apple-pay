@@ -76,9 +76,9 @@ jobs:
             */node_modules
           key: dependency-cache-${{ hashFiles('package.json', '*/package.json') }}
       - run: npm install --no-package-lock
-        working-directory: ./packages/test-project
+        working-directory: ./packages/apple-pay-demo
       - run: npm run verify:ios
-        working-directory: ./packages/test-project
+        working-directory: ./packages/apple-pay-demo
   verify-android:
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -99,9 +99,9 @@ jobs:
             */node_modules
           key: dependency-cache-${{ hashFiles('package.json', '*/package.json') }}
       - run: npm install --no-package-lock
-        working-directory: ./packages/test-project
+        working-directory: ./packages/apple-pay-demo
       - run: npm run verify:android
-        working-directory: ./packages/test-project
+        working-directory: ./packages/apple-pay-demo
   verify-web:
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -122,9 +122,9 @@ jobs:
             */node_modules
           key: dependency-cache-${{ hashFiles('package.json', '*/package.json') }}
       - run: npm install --no-package-lock
-        working-directory: ./packages/test-project
+        working-directory: ./packages/apple-pay-demo
       - run: npm run verify:web
-        working-directory: ./packages/test-project
+        working-directory: ./packages/apple-pay-demo
   test:
     runs-on: macos-latest
     timeout-minutes: 15

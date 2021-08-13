@@ -13,6 +13,8 @@
   "types": "dist/esm/index.d.ts",
   "scripts": {
     "lint": "npm run prettier -- --check && npm run swiftlint -- lint",
+    "fmt": "npm run eslint -- --fix && npm run prettier -- --write && npm run swiftlint -- autocorrect --format",
+    "eslint": "eslint . --ext ts",
     "prettier": "prettier \"**/*.{css,html,ts,js,java}\"",
     "swiftlint": "node-swiftlint",
     "build": "npm run clean && tsc && rollup -c rollup.config.js",
@@ -26,11 +28,13 @@
     "@capacitor/android": "^3.1.1",
     "@capacitor/core": "^3.1.1",
     "@capacitor/ios": "^3.1.1",
-    "@ionic/prettier-config": "^1.0.0",
-    "@ionic/swiftlint-config": "^1.0.0",
+    "@ionic/eslint-config": "^0.3.0",
+    "@ionic/prettier-config": "^1.0.1",
+    "@ionic/swiftlint-config": "^1.1.2",
     "@rollup/plugin-node-resolve": "^8.1.0",
     "@ionic/markdown-docs-theme": "^3.0.1",
-    "prettier": "^2.0.5",
+    "eslint": "^7.32.0",
+    "prettier": "^2.3.2",
     "prettier-plugin-java": "^0.8.0",
     "rimraf": "^3.0.0",
     "rollup": "^2.21.0",
@@ -63,8 +67,10 @@
   },
   "prettier": "@ionic/prettier-config",
   "swiftlint": "@ionic/swiftlint-config",
+  "eslintConfig": {
+    "extends": "@ionic/eslint-config/recommended"
+  },
   "bugs": {
     "url": "https://github.com/ionic-team/enterprise-apple-pay/issues"
-  },
-  "dependencies": {}
+  }
 }
