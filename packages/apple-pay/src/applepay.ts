@@ -1,16 +1,17 @@
-import {
+import type {
   LogLevel,
   ApplePayAvailabilityOptions,
   ApplePayCanMakePaymentResponse,
   ApplePayRequest,
   ApplePayPaymentRequestResponse,
 } from './definitions';
-
 import { ApplePayImpl } from './web';
 
 export class ApplePay {
   /** @ignore */
-  constructor() {}
+  constructor() {
+    // is here just to hide
+  }
   /**
    * Set the verbosity of event logging.
    */
