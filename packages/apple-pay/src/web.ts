@@ -1,13 +1,14 @@
 import { WebPlugin, registerPlugin } from '@capacitor/core';
 
 import { onPaymentAuthorized, onValidateMerchant } from './apple-pay-js-events';
+import { ApplePayErrorCodes, getApplePayError, LogLevel } from './definitions';
 import type {
-  ApplePayAvailablilityOptions,
+  ApplePayAvailabilityOptions,
+  ApplePayCanMakePaymentsResponse,
   ApplePayPaymentRequestResponse,
   ApplePayPlugin,
   ApplePayRequest,
 } from './definitions';
-import { ApplePayErrorCodes, getApplePayError, LogLevel } from './definitions';
 import { Logger } from './logger';
 
 interface ApplePayJS {
@@ -21,8 +22,14 @@ interface ApplePayJS {
 const logger = Logger.instance();
 
 export class ApplePayWeb extends WebPlugin implements ApplePayPlugin {
+  /** @ignore */
   private get ApplePaySession(): ApplePayJS {
     return (window as any).ApplePaySession;
+  }
+
+  /** @ignore */
+  constructor() {
+    super();
   }
 
   setLogLevel(level: LogLevel): void {
@@ -30,8 +37,8 @@ export class ApplePayWeb extends WebPlugin implements ApplePayPlugin {
   }
 
   async canMakePayments(
-    options: ApplePayAvailablilityOptions,
-  ): Promise<{ canMakePayments: boolean }> {
+    options: ApplePayAvailabilityOptions,
+  ): Promise<ApplePayCanMakePaymentsResponse> {
     try {
       this.checkApplePayJSAvailable();
       return {
@@ -54,7 +61,7 @@ export class ApplePayWeb extends WebPlugin implements ApplePayPlugin {
     const isAvailable = this.checkApplePayJSAvailable();
 
     if (!isAvailable) {
-      throw getApplePayError(ApplePayErrorCodes.ApplePayNotAvailable);
+      throw getApplePayError(ApplePayErrorCodes.NotAvailable);
     }
 
     return new Promise<ApplePayPaymentRequestResponse>((resolve, reject) => {
@@ -67,9 +74,7 @@ export class ApplePayWeb extends WebPlugin implements ApplePayPlugin {
         logger.log('Apple Pay Session created');
       } catch (e) {
         logger.error('begin session error', e);
-        reject(
-          getApplePayError(ApplePayErrorCodes.ApplePayUnableToOpenSession, e),
-        );
+        reject(getApplePayError(ApplePayErrorCodes.UnableToOpenSession, e));
         return;
       }
 
@@ -85,7 +90,7 @@ export class ApplePayWeb extends WebPlugin implements ApplePayPlugin {
             session.abort();
             reject(
               getApplePayError(
-                ApplePayErrorCodes.ApplePayMerchantValidationFailed,
+                ApplePayErrorCodes.MerchantValidationFailed,
                 err,
               ),
             );
@@ -113,10 +118,7 @@ export class ApplePayWeb extends WebPlugin implements ApplePayPlugin {
               status: this.ApplePaySession.STATUS_FAILURE,
             });
             reject(
-              getApplePayError(
-                ApplePayErrorCodes.ApplePayAuthorizationFailed,
-                err,
-              ),
+              getApplePayError(ApplePayErrorCodes.AuthorizationFailed, err),
             );
           },
         },
@@ -124,13 +126,14 @@ export class ApplePayWeb extends WebPlugin implements ApplePayPlugin {
 
       session.oncancel = (event: any) => {
         logger.error('canceled', event);
-        reject(getApplePayError(ApplePayErrorCodes.ApplePayCanceled));
+        reject(getApplePayError(ApplePayErrorCodes.UserCanceled));
       };
 
       session.begin();
     });
   }
 
+  /** @ignore */
   private checkApplePayJSAvailable(): boolean {
     if (this.ApplePaySession) {
       logger.log('Apple Pay JS available');
@@ -141,9 +144,8 @@ export class ApplePayWeb extends WebPlugin implements ApplePayPlugin {
     return false;
   }
 }
-
-const ApplePay = registerPlugin<ApplePayPlugin>('ApplePay', {
+const ApplePayImpl = registerPlugin<ApplePayPlugin>('ApplePay', {
   web: () => import('./web').then(m => new m.ApplePayWeb()),
 });
 
-export { ApplePay };
+export { ApplePayImpl };
