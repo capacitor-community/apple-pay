@@ -1,6 +1,7 @@
 module.exports = {
   sidebar: [
     'overview',
+    'install',
     {
       type: 'category',
       label: 'Reference',
