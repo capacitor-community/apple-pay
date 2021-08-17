@@ -9,7 +9,12 @@ __Don't have an Apple Pay subscription?__ [Try it free now](http://dashboard.ion
 
 Follow these steps to install Apple Pay into your app.
 
-<NativeEnterpriseInstall pluginId="apple-pay" variables="" />
+> Apple Pay plugin is only available for projects running Capacitor 3 or later.
+
+```bash
+npm install @ionic-enterprise/apple-pay
+npx cap sync
+```
 
 ## Getting Started
 
