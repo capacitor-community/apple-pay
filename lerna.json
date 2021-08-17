@@ -1,6 +1,8 @@
 {
-  "version": "0.1.1",
-  "packages": ["packages/*"],
+  "version": "1.0.0",
+  "packages": [
+    "packages/*"
+  ],
   "npmClient": "npm",
   "command": {
     "bootstrap": {
@@ -16,7 +18,11 @@
       "hoist": true
     },
     "version": {
-      "allowBranch": ["stable", "beta", "main"],
+      "allowBranch": [
+        "stable",
+        "beta",
+        "main"
+      ],
       "conventionalCommits": true,
       "createRelease": "github",
       "message": "release: %s",
