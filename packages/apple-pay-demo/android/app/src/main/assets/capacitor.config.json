@@ -1,0 +1,12 @@
+{
+	"appId": "io.ionic.apple.pay.demo",
+	"appName": "apple-pay-demo",
+	"bundledWebRuntime": false,
+	"webDir": "www",
+	"plugins": {
+		"SplashScreen": {
+			"launchShowDuration": 0
+		}
+	},
+	"cordova": {}
+}

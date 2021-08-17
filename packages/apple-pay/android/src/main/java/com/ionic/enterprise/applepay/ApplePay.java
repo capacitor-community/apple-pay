@@ -1,20 +1,20 @@
 package com.ionic.enterprise.applepay;
 
-import com.getcapacitor.JSObject;
-import com.getcapacitor.NativePlugin;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
+import com.getcapacitor.annotation.CapacitorPlugin;
 
 @CapacitorPlugin
 public class ApplePay extends Plugin {
 
     @PluginMethod
-    public void echo(PluginCall call) {
-        String value = call.getString("value");
+    public void canMakePayments(PluginCall call) {
+        call.reject("Apple Pay is not available on Android.");
+    }
 
-        JSObject ret = new JSObject();
-        ret.put("value", value);
-        call.success(ret);
+    @PluginMethod
+    public void makePaymentRequest(PluginCall call) {
+        call.reject("Apple Pay is not available on Android.");
     }
 }
