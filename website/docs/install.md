@@ -13,7 +13,7 @@ Follow these steps to install Apple Pay into your app.
 
 ## Getting Started
 
-Integrating with your application only requires two basic API calls. First, check if the user is running a device capable of using Apple Pay in the current context by calling the [canMakePayments](/classes/applepay#canmakepayments) method, then make the payment request using [makePaymentRequest](/classes/applepay#makepaymentrequest).
+Integrating with your application only requires two basic API calls. First, check if the user is running a device capable of using Apple Pay in the current context by calling the [canMakePayments](classes/applepay#canmakepayments) method, then make the payment request using [makePaymentRequest](classes/applepay#makepaymentrequest).
 
 ```typescript
 
