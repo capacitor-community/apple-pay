@@ -2,7 +2,7 @@
 title: ApplePayMerchantValidationParams
 ---
 
-An object containing request parameters for server-side merchant validation.
+An object containing request parameters for server-side merchant validation. These values are only required if your application will run on the web.
 
 ## Properties
 
@@ -14,18 +14,15 @@ The display name of your store, UTF-8, unlocalized, with a max length of 64 char
 
 ### initiative
 
-- Type: `web` | `native`
+- Type: `web`
 
-The type of the app making the request.
-
-The values for initiative and initiativeContext depend on the kind of application you’re building:
-- For Apple Pay on the web, use "web" for the initiative parameter. For the initiativeContext parameter, provide your fully qualified domain name associated with your Apple Pay Merchant Identity Certificate.
+This value should be set to `web`.
 
 ### initiativeContext
 
 - Type: `string`
 
-A value you provide based on the initiative.
+This value should be your fully qualified domain name associated with your Apple Pay Merchant Identity Certificate.
 
 ### merchantIdentifier
 

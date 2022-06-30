@@ -1,7 +1,24 @@
 module.exports = {
   sidebar: [
-    'overview',
-    'install',
+    {
+      type: 'category',
+      label: 'Getting Started',
+      collapsed: false,
+      items: [
+        'overview',
+        'install',
+      ]
+    },
+    {
+      type: 'category',
+      label: 'Guides',
+      collapsed: false,
+      items: [
+        'configuration',
+        'backend',
+        'tutorial'
+      ]
+    },
     {
       type: 'category',
       label: 'Reference',

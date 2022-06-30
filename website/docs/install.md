@@ -25,3 +25,5 @@ Integrating with your application only requires two basic API calls. First, chec
 await ApplePay.canMakePayments({});
 await ApplePay.makePaymentRequest({});
 ```
+
+Additional information can found in the [tutorial](tutorial).

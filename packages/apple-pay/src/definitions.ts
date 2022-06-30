@@ -112,19 +112,18 @@ export interface ApplePayMerchantValidationParams {
    */
   displayName: string;
   /**
-   * - Type: `web` | `native`
+   * - Type: `web`
    *
    * The type of the app making the request.
    *
-   * The values for initiative and initiativeContext depend on the kind of application you’re building:
-   * - For Apple Pay on the web, use "web" for the initiative parameter. For the initiativeContext parameter, provide your fully qualified domain name associated with your Apple Pay Merchant Identity Certificate.
+   * This value should be set to `web`. It is ignored when run natively.
    */
   initiative: 'web' | 'native';
 
   /**
    * - Type: `string`
    *
-   * A value you provide based on the initiative.
+   * This value should be your fully qualified domain name associated with your Apple Pay Merchant Identity Certificate.
    */
   initiativeContext: string;
 }
@@ -136,7 +135,7 @@ export interface ApplePayMerchantValidation {
   /**
    * - Type: `string`
    *
-   * The url to your merchant validation server. */
+   * The url to your merchant validation server. If your application will only be used natively then this value can be set to `undefined`. */
   url: string;
 
   /**

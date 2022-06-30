@@ -16,4 +16,4 @@ Additional params that will be POSTed to the the merchant validation server.
 
 - Type: `string`
 
-The url to your merchant validation server.
+The url to your merchant validation server. If your application will only be used natively then this value can be set to `undefined`.
