@@ -25,9 +25,9 @@
     "docs": "typedoc --plugin typedoc-plugin-markdown --theme ./node_modules/@ionic/markdown-docs-theme/dist src/index.ts && rm -rf ../../website/docs/{enums,interfaces,classes} && mv api/{enums,interfaces,classes} ../../website/docs && mv api/modules.md ../../website/docs/modules.md && rm -rf api"
   },
   "devDependencies": {
-    "@capacitor/android": ">=3.1.1",
-    "@capacitor/core": ">=3.1.1",
-    "@capacitor/ios": ">=3.1.1",
+    "@capacitor/android": "^3.1.1",
+    "@capacitor/core": "^3.1.1",
+    "@capacitor/ios": "^3.1.1",
     "@ionic/eslint-config": "^0.3.0",
     "@ionic/markdown-docs-theme": "^3.0.1",
     "@ionic/prettier-config": "^1.0.1",
@@ -44,7 +44,7 @@
     "typescript": "~3.9.10"
   },
   "peerDependencies": {
-    "@capacitor/core": ">=3.1.1"
+    "@capacitor/core": "^3.1.1"
   },
   "files": [
     "dist/",
