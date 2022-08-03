@@ -1,6 +1,6 @@
 {
   "name": "apple-pay-demo",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
   "scripts": {
@@ -28,7 +28,7 @@
     "@capacitor/keyboard": "^4.0.1",
     "@capacitor/splash-screen": "^4.0.1",
     "@capacitor/status-bar": "^4.0.1",
-    "@ionic-enterprise/apple-pay": "^1.0.0",
+    "@ionic-enterprise/apple-pay": "^1.0.2",
     "@ionic/angular": "^5.0.0",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
