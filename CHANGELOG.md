@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0] (2023-05-12)
+
+
+### Features
+
+* Capacitor 5 compatibility ([740366c](https://github.com/ionic-team/enterprise-apple-pay/commit/740366ce537723a50a876d66b799af65a93a73b7))
+
+
+
+
+
 ## 1.0.2 (2022-08-03)
 
 
