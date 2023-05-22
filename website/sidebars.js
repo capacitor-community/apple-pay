@@ -59,5 +59,6 @@ module.exports = {
         },
       ],
     },
+    'support-policy'
   ],
 };
