@@ -55,7 +55,13 @@
   "keywords": [
     "capacitor",
     "plugin",
-    "native"
+    "native",
+    "applepay",
+    "apple pay",
+    "payments",
+    "credit card",
+    "processing",
+    "payment"
   ],
   "capacitor": {
     "ios": {
