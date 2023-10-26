@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.1](https://github.com/ionic-team/enterprise-apple-pay/compare/2.0.1-alpha.0...2.0.1) (2023-10-26)
+
+
+### Reverts
+
+* Revert "release: 2.0.1-alpha.0" ([f33d148](https://github.com/ionic-team/enterprise-apple-pay/commit/f33d148e87e5829709ec730d82cb74858d6391a0))
+
+
+
+
+
 # [2.0.0](https://github.com/ionic-team/enterprise-apple-pay/compare/1.0.2...2.0.0) (2023-05-12)
 
 
