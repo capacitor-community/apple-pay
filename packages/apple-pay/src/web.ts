@@ -1,4 +1,4 @@
-import { WebPlugin, registerPlugin } from '@capacitor/core';
+import { WebPlugin } from '@capacitor/core';
 
 import { onPaymentAuthorized, onValidateMerchant } from './apple-pay-js-events';
 import { ApplePayErrorCodes, getApplePayError, LogLevel } from './definitions';
@@ -72,7 +72,7 @@ export class ApplePayWeb extends WebPlugin implements ApplePayPlugin {
           options.request,
         );
         logger.log('Apple Pay Session created');
-      } catch (e) {
+      } catch (e: any) {
         logger.error('begin session error', e);
         reject(getApplePayError(ApplePayErrorCodes.UnableToOpenSession, e));
         return;
@@ -144,8 +144,3 @@ export class ApplePayWeb extends WebPlugin implements ApplePayPlugin {
     return false;
   }
 }
-const ApplePayImpl = registerPlugin<ApplePayPlugin>('ApplePay', {
-  web: () => import('./web').then(m => new m.ApplePayWeb()),
-});
-
-export { ApplePayImpl };

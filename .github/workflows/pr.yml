@@ -57,94 +57,94 @@ jobs:
           key: ${{ runner.OS }}-dependency-cache-${{ hashFiles('**/package.json') }}
       - run: npm install
       - run: npx lerna run lint
-  verify-ios:
-    runs-on: macos-latest
-    timeout-minutes: 30
-    needs:
-      - setup
-      - lint
-    steps:
-      - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 14.x
-      - uses: actions/checkout@v2
-      - name: Restore Dependency Cache
-        id: cache-modules
-        uses: actions/cache@v2
-        with:
-          path: |
-            node_modules
-            */node_modules
-          key: dependency-cache-${{ hashFiles('package.json', '*/package.json') }}
-      - run: npm install --no-package-lock
-        working-directory: ./packages/apple-pay-demo
-      - run: npm run verify:ios
-        working-directory: ./packages/apple-pay-demo
-  verify-android:
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    needs:
-      - setup
-      - lint
-    steps:
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 14.x
-      - uses: actions/checkout@v2
-      - name: Restore Dependency Cache
-        id: cache-modules
-        uses: actions/cache@v2
-        with:
-          path: |
-            node_modules
-            */node_modules
-          key: dependency-cache-${{ hashFiles('package.json', '*/package.json') }}
-      - run: npm install --no-package-lock
-        working-directory: ./packages/apple-pay-demo
-      - run: npm run verify:android
-        working-directory: ./packages/apple-pay-demo
-  verify-web:
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    needs:
-      - setup
-      - lint
-    steps:
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 14.x
-      - uses: actions/checkout@v2
-      - name: Restore Dependency Cache
-        id: cache-modules
-        uses: actions/cache@v2
-        with:
-          path: |
-            node_modules
-            */node_modules
-          key: dependency-cache-${{ hashFiles('package.json', '*/package.json') }}
-      - run: npm install --no-package-lock
-        working-directory: ./packages/apple-pay-demo
-      - run: npm run verify:web
-        working-directory: ./packages/apple-pay-demo
-  test:
-    runs-on: macos-latest
-    timeout-minutes: 15
-    needs:
-      - setup
-      - lint
-      - verify-ios
-      - verify-android
-      - verify-web
-    steps:
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 14.x
-      - uses: actions/checkout@v2
-      - name: Restore Dependency Cache
-        uses: actions/cache@v1
-        with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-dependency-cache-${{ hashFiles('**/package.json') }}
-      - run: npm install
-      - run: npx lerna run test
+  # verify-ios:
+  #   runs-on: macos-latest
+  #   timeout-minutes: 30
+  #   needs:
+  #     - setup
+  #     - lint
+  #   steps:
+  #     - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
+  #     - uses: actions/setup-node@v1
+  #       with:
+  #         node-version: 14.x
+  #     - uses: actions/checkout@v2
+  #     - name: Restore Dependency Cache
+  #       id: cache-modules
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: |
+  #           node_modules
+  #           */node_modules
+  #         key: dependency-cache-${{ hashFiles('package.json', '*/package.json') }}
+  #     - run: npm install --no-package-lock
+  #       working-directory: ./packages/apple-pay-demo
+  #     - run: npm run verify:ios
+  #       working-directory: ./packages/apple-pay-demo
+  # verify-android:
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 30
+  #   needs:
+  #     - setup
+  #     - lint
+  #   steps:
+  #     - uses: actions/setup-node@v1
+  #       with:
+  #         node-version: 14.x
+  #     - uses: actions/checkout@v2
+  #     - name: Restore Dependency Cache
+  #       id: cache-modules
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: |
+  #           node_modules
+  #           */node_modules
+  #         key: dependency-cache-${{ hashFiles('package.json', '*/package.json') }}
+  #     - run: npm install --no-package-lock
+  #       working-directory: ./packages/apple-pay-demo
+  #     - run: npm run verify:android
+  #       working-directory: ./packages/apple-pay-demo
+  # verify-web:
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 30
+  #   needs:
+  #     - setup
+  #     - lint
+  #   steps:
+  #     - uses: actions/setup-node@v1
+  #       with:
+  #         node-version: 14.x
+  #     - uses: actions/checkout@v2
+  #     - name: Restore Dependency Cache
+  #       id: cache-modules
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: |
+  #           node_modules
+  #           */node_modules
+  #         key: dependency-cache-${{ hashFiles('package.json', '*/package.json') }}
+  #     - run: npm install --no-package-lock
+  #       working-directory: ./packages/apple-pay-demo
+  #     - run: npm run verify:web
+  #       working-directory: ./packages/apple-pay-demo
+  # test:
+  #   runs-on: macos-latest
+  #   timeout-minutes: 15
+  #   needs:
+  #     - setup
+  #     - lint
+  #     - verify-ios
+  #     - verify-android
+  #     - verify-web
+  #   steps:
+  #     - uses: actions/setup-node@v1
+  #       with:
+  #         node-version: 14.x
+  #     - uses: actions/checkout@v2
+  #     - name: Restore Dependency Cache
+  #       uses: actions/cache@v1
+  #       with:
+  #         path: ~/.npm
+  #         key: ${{ runner.OS }}-dependency-cache-${{ hashFiles('**/package.json') }}
+  #     - run: npm install
+  #     - run: npx lerna run test

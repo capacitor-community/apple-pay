@@ -1,11 +1,17 @@
+import { registerPlugin } from '@capacitor/core';
+
 import type {
   LogLevel,
   ApplePayAvailabilityOptions,
   ApplePayCanMakePaymentsResponse,
   ApplePayRequest,
   ApplePayPaymentRequestResponse,
+  ApplePayPlugin,
 } from './definitions';
-import { ApplePayImpl } from './web';
+
+const ApplePayImpl = registerPlugin<ApplePayPlugin>('ApplePay', {
+  web: () => import('./web').then(m => new m.ApplePayWeb()),
+});
 
 export class ApplePay {
   /** @ignore */
