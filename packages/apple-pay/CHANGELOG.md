@@ -6,9 +6,9 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ## [2.0.1](https://github.com/ionic-team/enterprise-apple-pay/compare/2.0.1-alpha.0...2.0.1) (2023-10-26)
 
 
-### Reverts
+### Bug Fixes
 
-* Revert "release: 2.0.1-alpha.0" ([f33d148](https://github.com/ionic-team/enterprise-apple-pay/commit/f33d148e87e5829709ec730d82cb74858d6391a0))
+* circular ref in web exports ([#18](https://github.com/ionic-team/enterprise-apple-pay/issues/18)) ([c69cf28](https://github.com/ionic-team/enterprise-apple-pay/commit/c69cf28f4d7b517758d0509a85895a2d40b4eb3b))
 
 
 
