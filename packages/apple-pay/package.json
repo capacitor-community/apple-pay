@@ -1,6 +1,6 @@
 {
   "name": "@ionic-enterprise/apple-pay",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Capacitor Plugin used to enable Apple Pay in an Application",
   "author": "Ionic Team <hi@ionic.io> (https://ionicframework.com)",
   "license": "SEE LICENSE",
