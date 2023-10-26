@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.1-alpha.0](https://github.com/ionic-team/enterprise-apple-pay/compare/2.1.0...2.0.1-alpha.0) (2023-10-26)
+
+
+### Bug Fixes
+
+* publish script ([e659949](https://github.com/ionic-team/enterprise-apple-pay/commit/e65994995c5ef5b4660b7b0aaff7bdd152c294fd))
+
+
+### Reverts
+
+* Revert "release: 2.1.0" ([fd5eeed](https://github.com/ionic-team/enterprise-apple-pay/commit/fd5eeed68d6a3be6a71692afa13ac86a70bae65a))
+
+
+
+
+
 # [2.0.0] (2023-05-12)
 
 
