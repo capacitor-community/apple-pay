@@ -30,10 +30,20 @@ jobs:
     name: Conventional PR
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v1
+      - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
         with:
-          node-version: 14.x
-      - uses: actions/checkout@v2
+          version: 9
+          run_install: false
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
       - uses: amannn/action-semantic-pull-request@v3.4.0
         with:
           validateSingleCommit: true
@@ -46,17 +56,41 @@ jobs:
       - setup
     steps:
       - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
         with:
-          node-version: 14.x
-      - uses: actions/checkout@v2
-      - name: Restore Dependency Cache
-        uses: actions/cache@v1
+          version: 9
+          run_install: false
+      - name: Install Node.js
+        uses: actions/setup-node@v4
         with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-dependency-cache-${{ hashFiles('**/package.json') }}
-      - run: npm install
-      - run: npx lerna run lint
+          node-version: 20
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - run: pnpm lerna run lint
+  build:
+    runs-on: macos-latest
+    timeout-minutes: 10
+    needs:
+      - setup
+    steps:
+      - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 9
+          run_install: false
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - run: pnpm lerna run build
   # verify-ios:
   #   runs-on: macos-latest
   #   timeout-minutes: 30

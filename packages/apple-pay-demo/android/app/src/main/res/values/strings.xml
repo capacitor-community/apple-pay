@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">apple-pay-demo</string>
-    <string name="title_activity_main">apple-pay-demo</string>
-    <string name="package_name">io.ionic.apple.pay.demo</string>
-    <string name="custom_url_scheme">io.ionic.apple.pay.demo</string>
-</resources>

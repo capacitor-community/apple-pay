@@ -27,19 +27,22 @@ jobs:
       - setup
     steps:
       - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 14.x
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Restore Dependency Cache
-        uses: actions/cache@v1
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
         with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-dependency-cache-${{ hashFiles('**/package.json') }}
-      - run: npm install --no-package-lock
-      - run: npm run lerna:publish:dev || true
+          version: 9
+          run_install: false
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - run: pnpm run lerna:publish:dev || true
   release-beta:
     runs-on: macos-latest
     timeout-minutes: 10
@@ -50,19 +53,22 @@ jobs:
       - setup
     steps:
       - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 14.x
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Restore Dependency Cache
-        uses: actions/cache@v1
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
         with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-dependency-cache-${{ hashFiles('**/package.json') }}
-      - run: npm install --no-package-lock
-      - run: npm run lerna:publish:beta || true
+          version: 9
+          run_install: false
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - run: pnpm run lerna:publish:beta || true
   release-prod:
     runs-on: macos-latest
     timeout-minutes: 10
@@ -73,16 +79,20 @@ jobs:
       - setup
     steps:
       - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 14.x
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v24
         with:
           fetch-depth: 0
-      - name: Restore Dependency Cache
-        uses: actions/cache@v1
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
         with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-dependency-cache-${{ hashFiles('**/package.json') }}
-      - run: npm install --no-package-lock
-      - run: npm run lerna:publish:latest || true
+          version: 9
+          run_install: false
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install
+      - run: pnpm install --no-package-lock
+      - run: pnpm run lerna:publish:latest || true

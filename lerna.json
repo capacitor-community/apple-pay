@@ -3,20 +3,8 @@
   "packages": [
     "packages/*"
   ],
-  "npmClient": "npm",
+  "npmClient": "pnpm",
   "command": {
-    "bootstrap": {
-      "hoist": true
-    },
-    "lint": {
-      "hoist": true
-    },
-    "fmt": {
-      "hoist": true
-    },
-    "test": {
-      "hoist": true
-    },
     "version": {
       "allowBranch": [
         "stable",
