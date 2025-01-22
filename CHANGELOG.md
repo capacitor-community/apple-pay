@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0](https://github.com/ionic-team/enterprise-apple-pay/compare/2.0.3...3.0.0) (2025-01-22)
+
+**Note:** Version bump only for package root
+
+
+
+
+
 ## [2.0.3](https://github.com/ionic-team/enterprise-apple-pay/compare/2.0.2...2.0.3) (2024-07-11)
 
 **Note:** Version bump only for package root
