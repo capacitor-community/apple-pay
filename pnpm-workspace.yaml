@@ -1,3 +1,4 @@
 packages:
   - 'packages/apple-pay'
   - 'packages/apple-pay-demo'
+  - 'packages/apple-pay-demo-spm'

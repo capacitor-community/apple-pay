@@ -19,7 +19,7 @@ const Home: React.FC = () => {
     merchantValidationUrl: string;
     authorizationUrl: string;
   } = {
-    merchantIdentifier: 'merchant.com.dallastjames.applepay.test',
+    merchantIdentifier: 'merchant.com.adyen.pluginPayments.test',
     supportedNetworks: [
       ApplePaySupportedNetwork.VISA,
       ApplePaySupportedNetwork.MASTERCARD,
