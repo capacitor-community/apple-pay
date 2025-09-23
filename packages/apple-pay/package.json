@@ -61,7 +61,7 @@
     "@ionic/prettier-config" : "^1.0.1",
     "typedoc-plugin-markdown" : "3.6.0",
     "@rollup/plugin-node-resolve" : "^8.1.0",
-    "@ionic/markdown-docs-theme": "^3.0.1",
+  
     "swiftlint" : "^1.0.2",
     "@capacitor/android" : "^7.0.0"
   },
