@@ -1,21 +1,51 @@
 {
-  "types" : "dist/esm/index.d.ts",
   "name" : "@ionic-enterprise/apple-pay",
+  "version" : "3.0.0",
+  "description" : "Capacitor Plugin used to enable Apple Pay in an Application",
+  "author" : "Ionic Team <hi@ionic.io> (https://ionicframework.com)",
+  "license" : "SEE LICENSE",
+  "repository" : {
+    "url" : "https://github.com/ionic-team/enterprise-apple-pay",
+    "type" : "git"
+  },
+  "main" : "dist/plugin.js",
+  "module" : "dist/esm/index.js",
+  "types" : "dist/esm/index.d.ts",
   "scripts" : {
     "lint" : "npm run prettier -- --check && npm run swiftlint -- lint",
-    "swiftlint" : "node-swiftlint",
-    "build" : "npm run clean && tsc && rollup -c rollup.config.js",
     "fmt" : "npm run eslint -- --fix && npm run prettier -- --write && npm run swiftlint -- --fix --format",
     "eslint" : "eslint . --ext ts",
+    "prettier" : "prettier \"**/*.{css,html,ts,js,java}\"",
+    "swiftlint" : "node-swiftlint",
+    "build" : "npm run clean && tsc && rollup -c rollup.config.js",
+    "clean" : "rimraf ./dist",
+    "watch" : "tsc --watch",
     "prepublishOnly" : "npm run build",
     "remove-void-implements" : "node ../../scripts/remove-void-implements.js",
-    "prettier" : "prettier \"**/*.{css,html,ts,js,java}\"",
-    "clean" : "rimraf ./dist",
-    "docs" : "typedoc --plugin typedoc-plugin-markdown --theme ./node_modules/@ionic/markdown-docs-theme/dist src/index.ts && rm -rf ../../website/docs/{enums,interfaces,classes} && mv api/{enums,interfaces,classes} ../../website/docs && mv api/modules.md ../../website/docs/modules.md && rm -rf api",
-    "watch" : "tsc --watch"
+    "docs" : "typedoc --plugin typedoc-plugin-markdown --theme ./node_modules/@ionic/markdown-docs-theme/dist src/index.ts && rm -rf ../../website/docs/{enums,interfaces,classes} && mv api/{enums,interfaces,classes} ../../website/docs && mv api/modules.md ../../website/docs/modules.md && rm -rf api"
   },
-  "module" : "dist/esm/index.js",
-  "version" : "3.0.0",
+  "devDependencies" : {
+    "@capacitor/android" : "^7.0.0",
+    "@capacitor/core" : "^7.0.0",
+    "@capacitor/ios" : "^7.0.0",
+    "@ionic/eslint-config" : "^0.3.0",
+    "@ionic/markdown-docs-theme": "^3.0.1",
+    "@ionic/prettier-config" : "^1.0.1",
+    "@ionic/swiftlint-config" : "^1.1.2",
+    "@rollup/plugin-node-resolve" : "^8.1.0",
+    "eslint" : "^7.32.0",
+    "prettier" : "^2.3.2",
+    "prettier-plugin-java" : "^0.8.0",
+    "rimraf" : "^3.0.0",
+    "rollup" : "^2.21.0",
+    "swiftlint" : "^1.0.2",
+    "typedoc" : "^0.20.30",
+    "typedoc-plugin-markdown" : "3.6.0",
+    "typescript" : "~4.2.0"
+  },
+  "peerDependencies" : {
+    "@capacitor/core" : ">=7.0.0"
+  },
   "files" : [
     "dist/",
     "ios/",
@@ -23,51 +53,6 @@
     "IonicEnterpriseApplePay.podspec",
     "Package.swift"
   ],
-  "eslintConfig" : {
-    "extends" : "@ionic/eslint-config/recommended"
-  },
-  "main" : "dist/plugin.js",
-  "prettier" : "@ionic/prettier-config",
-  "bugs" : {
-    "url" : "https://github.com/ionic-team/enterprise-apple-pay/issues"
-  },
-  "swiftlint" : "@ionic/swiftlint-config",
-  "author" : "Ionic Team <hi@ionic.io> (https://ionicframework.com)",
-  "description" : "Capacitor Plugin used to enable Apple Pay in an Application",
-  "capacitor" : {
-    "android" : {
-      "src" : "android"
-    },
-    "ios" : {
-      "src" : "ios"
-    }
-  },
-  "repository" : {
-    "url" : "https://github.com/ionic-team/enterprise-apple-pay",
-    "type" : "git"
-  },
-  "devDependencies" : {
-    "typescript" : "~4.2.0",
-    "@ionic/swiftlint-config" : "^1.1.2",
-    "rollup" : "^2.21.0",
-    "rimraf" : "^3.0.0",
-    "prettier-plugin-java" : "^0.8.0",
-    "@capacitor/ios" : "^7.0.0",
-    "prettier" : "^2.3.2",
-    "@ionic/eslint-config" : "^0.3.0",
-    "typedoc" : "^0.20.30",
-    "@capacitor/core" : "^7.0.0",
-    "eslint" : "^7.32.0",
-    "@ionic/prettier-config" : "^1.0.1",
-    "typedoc-plugin-markdown" : "3.6.0",
-    "@rollup/plugin-node-resolve" : "^8.1.0",
-    "@ionic/markdown-docs-theme": "^3.0.1",
-    "swiftlint" : "^1.0.2",
-    "@capacitor/android" : "^7.0.0"
-  },
-  "peerDependencies" : {
-    "@capacitor/core" : ">=7.0.0"
-  },
   "keywords" : [
     "capacitor",
     "plugin",
@@ -79,5 +64,20 @@
     "processing",
     "payment"
   ],
-  "license" : "SEE LICENSE"
+  "capacitor" : {
+    "ios" : {
+      "src" : "ios"
+    },
+    "android" : {
+      "src" : "android"
+    }
+  },
+  "prettier" : "@ionic/prettier-config",
+  "swiftlint" : "@ionic/swiftlint-config",
+  "eslintConfig" : {
+    "extends" : "@ionic/eslint-config/recommended"
+  },
+  "bugs" : {
+    "url" : "https://github.com/ionic-team/enterprise-apple-pay/issues"
+  }
 }
