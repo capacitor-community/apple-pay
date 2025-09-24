@@ -90,6 +90,7 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install
+        
       - run: pnpm lerna run build
   # verify-ios:
   #   runs-on: macos-latest
