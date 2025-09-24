@@ -5,7 +5,14 @@ import PassKit
 /// Please read the Capacitor iOS Plugin Development Guide
 /// here: https://capacitorjs.com/docs/plugins/ios
 @objc(ApplePay)
-public class ApplePay: CAPPlugin {
+public class ApplePay: CAPPlugin, CAPBridgedPlugin {
+    public let identifier = "ApplePay" 
+    public let jsName = "ApplePay" 
+    public let pluginMethods: [CAPPluginMethod] = [
+        CAPPluginMethod(name: "canMakePayments", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "makePaymentRequest", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "setLogLevel", returnType: CAPPluginReturnPromise),
+    ] 
 
     var handlerRef: ApplePayHandler!
 
