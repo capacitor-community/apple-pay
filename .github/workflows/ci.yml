@@ -41,7 +41,7 @@ jobs:
           node-version: 20
           cache: 'pnpm'
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install
       - run: pnpm run lerna:publish:dev || true
   release-beta:
     runs-on: macos-latest
@@ -67,7 +67,7 @@ jobs:
           node-version: 20
           cache: 'pnpm'
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install
       - run: pnpm run lerna:publish:beta || true
   release-prod:
     runs-on: macos-latest
@@ -93,5 +93,6 @@ jobs:
           node-version: 20
           cache: 'pnpm'
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install
+      - run: pnpm install --no-package-lock
       - run: pnpm run lerna:publish:latest || true
