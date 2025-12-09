@@ -7,10 +7,12 @@ This policy is for Apple Pay as maintained by Ionic. Capacitor Core, Capacitor P
 
 ### Current Support Status
 
-| Version |      Status       |    Released     | Active Support Ends | Long-Term Support Ends |
-| :-----: | :---------------: | :-------------: | :-----------------: | :--------------------: |
-|   V1    | Long Term Support | August 16, 2021 |    May 12, 2023     |      May 12, 2024      |
-|   V2    |  Active Support   |  May 12, 2023   |         TBD         |          TBD           |
+| Version |      Status           |    Released     | Active Support Ends | Long-Term Support Ends |
+| :-----: | :-------------------: | :-------------: | :-----------------: | :--------------------: |
+|   V1    |  Not Supported        | August 16, 2021 |    May 12, 2023     |      May 12, 2024      |
+|   V2    |  Long Term Support    |  May 12, 2023   |    Dec 9, 2025      |      Dec 9, 2026       |
+|   V3    |  Long Term Support    |  May 12, 2023   |    Dec 9, 2025      |      Dec 9, 2026       |
+|   V4    |  Active Support       |   Dec 9, 2025   |         TBD         |          TBD           |
 
 ### Support Policy
 
