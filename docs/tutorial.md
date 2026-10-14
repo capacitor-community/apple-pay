@@ -30,7 +30,7 @@ Creating your payment web page layout is out of scope for this tutorial. But be 
 
 ## Is Apple Pay Supported
 
-Here is a function that uses [canMakePayments](classes/applepay.md#canmakepayments) and returns a boolean that we can use to control whether the Apple Pay button is hidden.
+Here is a function that uses `canMakePayments` and returns a boolean that we can use to control whether the Apple Pay button is hidden.
 
 ```typescript
   async checkForApplePay(): Promise<boolean> {
@@ -65,7 +65,7 @@ import {
     ApplePayMerchantCapability, 
     ApplePayRequest, 
     ApplePaySupportedNetwork
-    } from '@ionic-enterprise/apple-pay';
+    } from '@capacitor-community/apple-pay';
 ```
 
 ```typescript
@@ -126,6 +126,6 @@ This should cover the happy path of purchasing a hot dog, but there are a few po
    - Leave `initiative` as `web`.
 - The `merchantCapabilities` must contain at least `ApplePayMerchantCapability.THREEDS`.
 - The `lineItems` property can specify individual items comprising the purchase but can be omitted with `[]`.
-- The `version` property is for the Apple Pay version number (see [Apple Pay Versions](interfaces/applepayrequest#version))
+- The `version` property is for the Apple Pay version number (see [Apple Pay Versions](https://developer.apple.com/documentation/apple_pay_on_the_web/applepayjs/applepayrequest/version))
 
 

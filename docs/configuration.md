@@ -74,7 +74,7 @@ Open your project in XCode and:
 1. Double click `Apple Pay`.
 1. Click the checkbox next to the Merchant ID you created.
 
-> Without the Apple Pay capability assigned to a Merchant ID you will get an error when [makePaymentRequest](classes/applepay.md#makepaymentrequest) is called.
+> Without the Apple Pay capability assigned to a Merchant ID you will get an error when `makePaymentRequest` is called.
 
 ## Certification Expiration
 

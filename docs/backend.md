@@ -5,7 +5,7 @@ sidebar_label: Backend Requirements
 
 Apple Pay requires 2 backend API endpoints (described below) that you will need to implement. 
 
-You will specify these endpoints in the `merchantValidation.url` and `paymentAuthorization.url` properties when calling [makePaymentRequest](classes/applepay.md#makepaymentrequest).
+You will specify these endpoints in the `merchantValidation.url` and `paymentAuthorization.url` properties when calling `makePaymentRequest`.
 
 It is recommended to implement these in their own service. For reference take a look at this [sample service](https://github.com/ionic-team/apple-pay-relay-example).
 
@@ -13,7 +13,7 @@ It is recommended to implement these in their own service. For reference take a 
 
 > The Merchant Validation API is only required if you want your application to run on the web. When your app runs natively it will never call this API. 
 
-The plugin will call the [`merchantValidation.url`](interfaces/applepaymerchantvalidation.md#url) with a http `POST` method. 
+The plugin will call the `merchantValidation.url` with a http `POST` method. 
 
 You may choose a name for the endpoint (eg `https://api.my-company.com/session`)
 
@@ -130,7 +130,7 @@ if (event.httpMethod == 'OPTIONS') {
 
 ## Payment Authorization API
 
-The plugin will call the [`paymentAuthorization.url`](interfaces/applepaypaymentauthorization.md#url) which you must implement.
+The plugin will call the `paymentAuthorization.url` which you must implement.
 
 This endpoint will authorize a transaction for a payment processor. Your code should accept the token data and make a payment request with your chosen payment processor. The response should indicate sucess if the payment was succcessful.
 

@@ -1,4 +1,4 @@
-package com.ionic.enterprise.applepay;
+package com.getcapacitor.community.applepay;
 
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
