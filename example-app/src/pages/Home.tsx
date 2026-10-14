@@ -19,7 +19,7 @@ const Home: React.FC = () => {
     merchantValidationUrl: string;
     authorizationUrl: string;
   } = {
-    merchantIdentifier: 'merchant.com.dallastjames.applepay.test',
+    merchantIdentifier: 'REPLACE_WITH_MERCHANT_IDENTIFIER',
     supportedNetworks: [
       ApplePaySupportedNetwork.VISA,
       ApplePaySupportedNetwork.MASTERCARD,
@@ -33,8 +33,8 @@ const Home: React.FC = () => {
     ],
     countryCode: 'US',
     currencyCode: 'USD',
-    merchantValidationUrl: 'https://applepayrelay.dallastjames.com/applepayrelay/session/start',
-    authorizationUrl: 'https://applepayrelay.dallastjames.com/applepayrelay/session/authorize'
+    merchantValidationUrl: 'REPLACE_WITH_MERCHANT_VALIDATION_URL',
+    authorizationUrl: 'REPLACE_WITH_AUTHORIZATION_URL'
   }
 
   const isAvailable = async (): Promise<boolean> => {
@@ -52,9 +52,9 @@ const Home: React.FC = () => {
         url: paymentTestConfig.merchantValidationUrl,
         params: {
           merchantIdentifier: paymentTestConfig.merchantIdentifier,
-          displayName: 'Dallas James Test Store',
+          displayName: 'REPLACE_WITH_DISPLAY_NAME',
           initiative: 'web',
-          initiativeContext: 'applepay.dallastjames.com',
+          initiativeContext: 'REPLACE_WITH_INITIATIVE_CONTEXT',
         },
       },
       paymentAuthorization: {
