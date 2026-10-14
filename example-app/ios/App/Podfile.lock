@@ -1,52 +1,52 @@
 PODS:
-  - Capacitor (8.0.0):
+  - Capacitor (8.5.3):
     - CapacitorCordova
-  - CapacitorApp (8.0.0):
+  - CapacitorApp (8.1.2):
     - Capacitor
-  - CapacitorCordova (8.0.0)
-  - CapacitorHaptics (8.0.0):
+  - CapacitorCordova (8.5.3)
+  - CapacitorHaptics (8.0.2):
     - Capacitor
-  - CapacitorKeyboard (8.0.0):
+  - CapacitorKeyboard (8.0.6):
     - Capacitor
-  - CapacitorStatusBar (8.0.0):
+  - CapacitorStatusBar (8.0.4):
     - Capacitor
-  - IonicEnterpriseApplePay (3.0.0):
+  - IonicEnterpriseApplePay (4.0.0):
     - Capacitor
 
 DEPENDENCIES:
-  - "Capacitor (from `../../../../node_modules/.pnpm/@capacitor+ios@8.0.0_@capacitor+core@8.0.0/node_modules/@capacitor/ios`)"
-  - "CapacitorApp (from `../../../../node_modules/.pnpm/@capacitor+app@8.0.0_@capacitor+core@8.0.0/node_modules/@capacitor/app`)"
-  - "CapacitorCordova (from `../../../../node_modules/.pnpm/@capacitor+ios@8.0.0_@capacitor+core@8.0.0/node_modules/@capacitor/ios`)"
-  - "CapacitorHaptics (from `../../../../node_modules/.pnpm/@capacitor+haptics@8.0.0_@capacitor+core@8.0.0/node_modules/@capacitor/haptics`)"
-  - "CapacitorKeyboard (from `../../../../node_modules/.pnpm/@capacitor+keyboard@8.0.0_@capacitor+core@8.0.0/node_modules/@capacitor/keyboard`)"
-  - "CapacitorStatusBar (from `../../../../node_modules/.pnpm/@capacitor+status-bar@8.0.0_@capacitor+core@8.0.0/node_modules/@capacitor/status-bar`)"
-  - IonicEnterpriseApplePay (from `../../../apple-pay`)
+  - "Capacitor (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorApp (from `../../node_modules/@capacitor/app`)"
+  - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
+  - "CapacitorHaptics (from `../../node_modules/@capacitor/haptics`)"
+  - "CapacitorKeyboard (from `../../node_modules/@capacitor/keyboard`)"
+  - "CapacitorStatusBar (from `../../node_modules/@capacitor/status-bar`)"
+  - IonicEnterpriseApplePay (from `../../..`)
 
 EXTERNAL SOURCES:
   Capacitor:
-    :path: "../../../../node_modules/.pnpm/@capacitor+ios@8.0.0_@capacitor+core@8.0.0/node_modules/@capacitor/ios"
+    :path: "../../node_modules/@capacitor/ios"
   CapacitorApp:
-    :path: "../../../../node_modules/.pnpm/@capacitor+app@8.0.0_@capacitor+core@8.0.0/node_modules/@capacitor/app"
+    :path: "../../node_modules/@capacitor/app"
   CapacitorCordova:
-    :path: "../../../../node_modules/.pnpm/@capacitor+ios@8.0.0_@capacitor+core@8.0.0/node_modules/@capacitor/ios"
+    :path: "../../node_modules/@capacitor/ios"
   CapacitorHaptics:
-    :path: "../../../../node_modules/.pnpm/@capacitor+haptics@8.0.0_@capacitor+core@8.0.0/node_modules/@capacitor/haptics"
+    :path: "../../node_modules/@capacitor/haptics"
   CapacitorKeyboard:
-    :path: "../../../../node_modules/.pnpm/@capacitor+keyboard@8.0.0_@capacitor+core@8.0.0/node_modules/@capacitor/keyboard"
+    :path: "../../node_modules/@capacitor/keyboard"
   CapacitorStatusBar:
-    :path: "../../../../node_modules/.pnpm/@capacitor+status-bar@8.0.0_@capacitor+core@8.0.0/node_modules/@capacitor/status-bar"
+    :path: "../../node_modules/@capacitor/status-bar"
   IonicEnterpriseApplePay:
-    :path: "../../../apple-pay"
+    :path: "../../.."
 
 SPEC CHECKSUMS:
-  Capacitor: 79e40e5e76f852965dce30406c65253fa154e24a
-  CapacitorApp: cfa0120a1f3a6f69d4d37d3041782aa5c5167d0b
-  CapacitorCordova: 5dc3912d25ef770a3fe0f431bb65c9fbfa2e92f9
-  CapacitorHaptics: 7a77ce744c4b516b3ffd7f8c96d3de574d77b898
-  CapacitorKeyboard: 0a2e7c0635ccf3db60abed14bd6f35147ce25942
-  CapacitorStatusBar: c6fa2d404083e41d145ea56698707a6986d4428b
-  IonicEnterpriseApplePay: b1c41a58e731a082231571669d63f174404c77a0
+  Capacitor: 2f67eaeb8ed79909cd35b5e7439a5c2a9ca58e0f
+  CapacitorApp: 7b7e43debe505bc61beedb83796aa1368c86078b
+  CapacitorCordova: 0b7326439c7a09fc5d20eced5e0dab986327a493
+  CapacitorHaptics: 296f771ecd89c7a1bd92a7b6826a7d268e2e70f5
+  CapacitorKeyboard: f9e85e685082e9f63404de15db4a4291448b0912
+  CapacitorStatusBar: ff844df1f126da6c4fbc4028272425fa3a91e7e3
+  IonicEnterpriseApplePay: 55cc23c0f6ac6cf141a561007a40553e776df939
 
-PODFILE CHECKSUM: 356c78ad537c2b890ffb6ad86ea798b3c439dbff
+PODFILE CHECKSUM: 900206507135b9a0bcd10dec8a758967982767c3
 
 COCOAPODS: 1.16.2
