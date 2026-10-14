@@ -263,7 +263,7 @@ export interface ApplePayPlugin {
   /**
    * Set the verbosity of event logging.
    */
-  setLogLevel: (level: LogLevel) => void;
+  setLogLevel(level: LogLevel): void;
 
   /**
    *
@@ -280,9 +280,9 @@ export interface ApplePayPlugin {
    * }
    * ```
    */
-  canMakePayments: (
+  canMakePayments(
     options: ApplePayAvailabilityOptions,
-  ) => Promise<ApplePayCanMakePaymentsResponse>;
+  ): Promise<ApplePayCanMakePaymentsResponse>;
 
   /**
    * Attempts to make request payment by presenting the payment sheet over the app.
@@ -296,9 +296,9 @@ export interface ApplePayPlugin {
    * }
    * ```
    */
-  makePaymentRequest: (
+  makePaymentRequest(
     request: ApplePayRequest,
-  ) => Promise<ApplePayPaymentRequestResponse>;
+  ): Promise<ApplePayPaymentRequestResponse>;
 }
 
 export enum ApplePayErrorCodes {

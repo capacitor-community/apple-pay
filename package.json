@@ -1,9 +1,20 @@
 {
-  "name": "@ionic-enterprise/apple-pay",
-  "version": "4.0.0",
+  "name": "@capacitor-community/apple-pay",
+  "version": "5.0.0",
   "description": "Capacitor Plugin used to enable Apple Pay in an Application",
-  "author": "Ionic Team <hi@ionic.io> (https://ionicframework.com)",
-  "license": "SEE LICENSE",
+  "main": "dist/plugin.cjs.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "unpkg": "dist/plugin.js",
+  "files": [
+    "android",
+    "dist/",
+    "ios/",
+    "Package.swift",
+    "CapacitorCommunityApplePay.podspec"
+  ],
+  "author": "Capacitor Community",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/capacitor-community/apple-pay.git"
@@ -11,66 +22,53 @@
   "bugs": {
     "url": "https://github.com/capacitor-community/apple-pay/issues"
   },
-  "main": "dist/plugin.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/esm/index.d.ts",
-  "scripts": {
-    "verify": "npm run verify:ios && npm run verify:android && npm run verify:web",
-    "verify:ios": "xcodebuild -scheme CapacitorCommunityApplePay -destination generic/platform=iOS",
-    "verify:android": "cd android && ./gradlew clean build test && cd ..",
-    "verify:web": "npm run build",
-    "lint": "npm run prettier -- --check && npm run swiftlint -- lint",
-    "fmt": "npm run eslint -- --fix && npm run prettier -- --write && npm run swiftlint -- --fix --format",
-    "eslint": "eslint . --ext ts",
-    "prettier": "prettier \"**/*.{css,html,ts,js,java}\"",
-    "swiftlint": "node-swiftlint",
-    "build": "npm run clean && tsc && rollup -c rollup.config.js",
-    "clean": "rimraf ./dist",
-    "watch": "tsc --watch",
-    "prepublishOnly": "npm run build",
-    "remove-void-implements": "node scripts/remove-void-implements.js",
-    "docs": "typedoc --plugin typedoc-plugin-markdown --theme ./node_modules/@ionic/markdown-docs-theme/dist src/index.ts && rm -rf website/docs/{enums,interfaces,classes} && mv api/{enums,interfaces,classes} website/docs && mv api/modules.md website/docs/modules.md && rm -rf api"
-  },
-  "devDependencies": {
-    "@capacitor/android": "^8.0.0",
-    "@capacitor/core": "^8.0.0",
-    "@capacitor/ios": "^8.0.0",
-    "@ionic/eslint-config": "^0.3.0",
-    "@ionic/markdown-docs-theme": "^3.0.1",
-    "@ionic/prettier-config": "^1.0.1",
-    "@ionic/swiftlint-config": "^1.1.2",
-    "@rollup/plugin-node-resolve": "^8.1.0",
-    "eslint": "^7.32.0",
-    "prettier": "^2.3.2",
-    "prettier-plugin-java": "^0.8.0",
-    "rimraf": "^3.0.0",
-    "rollup": "^2.21.0",
-    "swiftlint": "^1.0.2",
-    "typedoc": "^0.20.30",
-    "typedoc-plugin-markdown": "3.6.0",
-    "typescript": "~4.2.0"
-  },
-  "peerDependencies": {
-    "@capacitor/core": ">=8.0.0"
-  },
-  "files": [
-    "dist/",
-    "ios/",
-    "android/",
-    "IonicEnterpriseApplePay.podspec",
-    "Package.swift"
-  ],
   "keywords": [
     "capacitor",
     "plugin",
     "native",
     "applepay",
     "apple pay",
-    "payments",
-    "credit card",
-    "processing",
-    "payment"
+    "payments"
   ],
+  "scripts": {
+    "verify": "npm run verify:ios && npm run verify:android && npm run verify:web",
+    "verify:ios": "xcodebuild -scheme CapacitorCommunityApplePay -destination generic/platform=iOS",
+    "verify:android": "cd android && ./gradlew clean build test && cd ..",
+    "verify:web": "npm run build",
+    "lint": "npm run eslint && npm run prettier -- --check && npm run swiftlint -- lint",
+    "fmt": "npm run eslint -- --fix && npm run prettier -- --write && npm run swiftlint -- autocorrect --format",
+    "eslint": "eslint . --ext ts",
+    "prettier": "prettier \"**/*.{css,html,ts,js,java}\" --plugin=prettier-plugin-java",
+    "swiftlint": "node-swiftlint",
+    "docgen": "docgen --api ApplePayPlugin --output-readme README.md --output-json dist/docs.json",
+    "build": "npm run clean && tsc && rollup -c rollup.config.mjs",
+    "clean": "rimraf ./dist",
+    "watch": "tsc --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@capacitor/android": "^8.0.0",
+    "@capacitor/core": "^8.0.0",
+    "@capacitor/docgen": "^0.3.0",
+    "@capacitor/ios": "^8.0.0",
+    "@ionic/eslint-config": "^0.4.0",
+    "@ionic/prettier-config": "^4.0.0",
+    "@ionic/swiftlint-config": "^2.0.0",
+    "eslint": "^8.57.0",
+    "prettier": "^3.4.2",
+    "prettier-plugin-java": "^2.6.6",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.30.1",
+    "swiftlint": "^2.0.0",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "@capacitor/core": ">=8.0.0"
+  },
+  "swiftlint": "@ionic/swiftlint-config",
+  "eslintConfig": {
+    "extends": "@ionic/eslint-config/recommended"
+  },
   "capacitor": {
     "ios": {
       "src": "ios"
@@ -78,11 +76,6 @@
     "android": {
       "src": "android"
     }
-  },
-  "prettier": "@ionic/prettier-config",
-  "swiftlint": "@ionic/swiftlint-config",
-  "eslintConfig": {
-    "extends": "@ionic/eslint-config/recommended"
   },
   "publishConfig": {
     "access": "public"

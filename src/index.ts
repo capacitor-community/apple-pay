@@ -13,6 +13,7 @@ export {
   ApplePayRequest,
   ApplePayPaymentRequestResponse,
   ApplePayCanMakePaymentsResponse,
+  ApplePayPlugin,
 } from './definitions';
 
 export * from './applepay';

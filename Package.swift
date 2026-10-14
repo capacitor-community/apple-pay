@@ -2,11 +2,11 @@
 import PackageDescription
 
 let package = Package(
-    name: "IonicEnterpriseApplePay",
+    name: "CapacitorCommunityApplePay",
     platforms: [.iOS(.v15)],
     products: [
         .library(
-            name: "IonicEnterpriseApplePay",
+            name: "CapacitorCommunityApplePay",
             targets: ["ApplePay"])
     ],
     dependencies: [
