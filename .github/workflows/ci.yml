@@ -1,98 +1,36 @@
 name: CI
 
 on:
-  workflow_dispatch:
   push:
-    branches:
-      - "main"
-      - "beta"
-      - "stable"
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
-  setup:
+  verify:
     runs-on: macos-latest
     timeout-minutes: 30
     steps:
-      - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.9.0
-        with:
-          access_token: ${{ secrets.GITHUB_TOKEN }}
-  release-dev:
-    runs-on: macos-latest
-    timeout-minutes: 10
-    if: |
-      github.event_name == 'push' && github.ref == 'refs/heads/main' && !startsWith(github.event.head_commit.message, 'release:') &&
-      !(contains(github.event.head_commit.message, 'ci') || contains(github.event.head_commit.message, 'cd') || contains(github.event.head_commit.message, 'build') || contains(github.event.head_commit.message, 'tests') || contains(github.event.head_commit.message, 'internal'))
-    needs:
-      - setup
-    steps:
-      - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          fetch-depth: 0
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
+          node-version: 22
+          cache: 'npm'
+
+      - uses: actions/setup-java@v4
         with:
-          version: 9
-          run_install: false
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'pnpm'
-      - name: Install dependencies
-        run: pnpm install
-      - run: pnpm run lerna:publish:dev || true
-  release-beta:
-    runs-on: macos-latest
-    timeout-minutes: 10
-    if: |
-      github.event_name == 'push' && github.ref == 'refs/heads/beta' && startsWith(github.event.head_commit.message, 'release:') && contains(github.event.head_commit.message, 'beta') &&
-      !(contains(github.event.head_commit.message, 'ci') || contains(github.event.head_commit.message, 'cd') || contains(github.event.head_commit.message, 'build') || contains(github.event.head_commit.message, 'tests') || contains(github.event.head_commit.message, 'internal'))
-    needs:
-      - setup
-    steps:
-      - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        with:
-          version: 9
-          run_install: false
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'pnpm'
-      - name: Install dependencies
-        run: pnpm install
-      - run: pnpm run lerna:publish:beta || true
-  release-prod:
-    runs-on: macos-latest
-    timeout-minutes: 10
-    if: |
-      github.event_name == 'push' && github.ref == 'refs/heads/stable' && startsWith(github.event.head_commit.message, 'release:') && !contains(github.event.head_commit.message, 'beta') && !contains(github.event.head_commit.message, 'dev') &&
-      !(contains(github.event.head_commit.message, 'ci') || contains(github.event.head_commit.message, 'cd') || contains(github.event.head_commit.message, 'build') || contains(github.event.head_commit.message, 'tests') || contains(github.event.head_commit.message, 'internal'))
-    needs:
-      - setup
-    steps:
-      - run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
-      - uses: actions/checkout@v24
-        with:
-          fetch-depth: 0
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        with:
-          version: 9
-          run_install: false
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'pnpm'
-      - name: Install dependencies
-        run: pnpm install
-      - run: pnpm install --no-package-lock
-      - run: pnpm run lerna:publish:latest || true
+          distribution: 'zulu'
+          java-version: '21'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Verify Plugin
+        run: npm run verify
+
+      - name: Verify Example App
+        run: |
+          cd example-app
+          npm ci
+          npm run build
+          npx cap sync
