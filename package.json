@@ -1,6 +1,6 @@
 {
   "name": "@capacitor-community/apple-pay",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Capacitor Plugin used to enable Apple Pay in an Application",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
