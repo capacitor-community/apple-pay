@@ -1,14 +1,12 @@
 PODS:
-  - Capacitor (8.5.3):
-    - CapacitorCordova
-  - CapacitorApp (8.1.2):
+  - Capacitor (9.0.0-beta.0)
+  - CapacitorApp (9.0.0-alpha.2):
     - Capacitor
-  - CapacitorCordova (8.5.3)
-  - CapacitorHaptics (8.0.2):
+  - CapacitorHaptics (9.0.0-next.1):
     - Capacitor
-  - CapacitorKeyboard (8.0.6):
+  - CapacitorKeyboard (9.0.0-next.1):
     - Capacitor
-  - CapacitorStatusBar (8.0.4):
+  - CapacitorStatusBar (9.0.0-alpha.2):
     - Capacitor
   - IonicEnterpriseApplePay (4.0.0):
     - Capacitor
@@ -16,7 +14,6 @@ PODS:
 DEPENDENCIES:
   - "Capacitor (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorApp (from `../../node_modules/@capacitor/app`)"
-  - "CapacitorCordova (from `../../node_modules/@capacitor/ios`)"
   - "CapacitorHaptics (from `../../node_modules/@capacitor/haptics`)"
   - "CapacitorKeyboard (from `../../node_modules/@capacitor/keyboard`)"
   - "CapacitorStatusBar (from `../../node_modules/@capacitor/status-bar`)"
@@ -27,8 +24,6 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/ios"
   CapacitorApp:
     :path: "../../node_modules/@capacitor/app"
-  CapacitorCordova:
-    :path: "../../node_modules/@capacitor/ios"
   CapacitorHaptics:
     :path: "../../node_modules/@capacitor/haptics"
   CapacitorKeyboard:
@@ -39,14 +34,13 @@ EXTERNAL SOURCES:
     :path: "../../.."
 
 SPEC CHECKSUMS:
-  Capacitor: 2f67eaeb8ed79909cd35b5e7439a5c2a9ca58e0f
-  CapacitorApp: 7b7e43debe505bc61beedb83796aa1368c86078b
-  CapacitorCordova: 0b7326439c7a09fc5d20eced5e0dab986327a493
-  CapacitorHaptics: 296f771ecd89c7a1bd92a7b6826a7d268e2e70f5
-  CapacitorKeyboard: f9e85e685082e9f63404de15db4a4291448b0912
-  CapacitorStatusBar: ff844df1f126da6c4fbc4028272425fa3a91e7e3
-  IonicEnterpriseApplePay: 55cc23c0f6ac6cf141a561007a40553e776df939
+  Capacitor: 99cf3d4c60fdccb9c06541e1b353cd6beafa31c8
+  CapacitorApp: 1d870da64e84d2e7bba00c28a12ccf0208a17ee3
+  CapacitorHaptics: cf461bf71051a548bb99107554563ab05c4f3a06
+  CapacitorKeyboard: 222ced64b88632400503c87e0b188952f3ce8265
+  CapacitorStatusBar: 838088db4185b93e8168e69e3b1dcf1f093a305f
+  IonicEnterpriseApplePay: 2b12d49211f4ad8bd1a0a990d12481d0f2486935
 
-PODFILE CHECKSUM: 900206507135b9a0bcd10dec8a758967982767c3
+PODFILE CHECKSUM: e18c9a2bf0dc9e98a27e2be69dffe2da18d20d35
 
 COCOAPODS: 1.16.2
