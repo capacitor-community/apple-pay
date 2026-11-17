@@ -1,11 +1,11 @@
-const fs = require("fs");
+const fs = require('fs');
 
-const filePaths = ["./api/classes/googlepayweb.md"];
+const filePaths = ['./api/classes/googlepayweb.md'];
 
 for (const path of filePaths) {
   try {
-    let data = fs.readFileSync(path, { encoding: "utf-8" });
-    data = data.replace(/Overrides of: void/g, "");
+    let data = fs.readFileSync(path, { encoding: 'utf-8' });
+    data = data.replace(/Overrides of: void/g, '');
     fs.writeFileSync(path, data);
   } catch (err) {
     console.error(err);
