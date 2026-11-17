@@ -280,9 +280,7 @@ export interface ApplePayPlugin {
    * }
    * ```
    */
-  canMakePayments: (
-    options: ApplePayAvailabilityOptions,
-  ) => Promise<ApplePayCanMakePaymentsResponse>;
+  canMakePayments: (options: ApplePayAvailabilityOptions) => Promise<ApplePayCanMakePaymentsResponse>;
 
   /**
    * Attempts to make request payment by presenting the payment sheet over the app.
@@ -296,9 +294,7 @@ export interface ApplePayPlugin {
    * }
    * ```
    */
-  makePaymentRequest: (
-    request: ApplePayRequest,
-  ) => Promise<ApplePayPaymentRequestResponse>;
+  makePaymentRequest: (request: ApplePayRequest) => Promise<ApplePayPaymentRequestResponse>;
 }
 
 export enum ApplePayErrorCodes {
@@ -371,11 +367,8 @@ export interface ApplePayError {
 }
 
 /** @ignore */
-export function getApplePayError(
-  code: ApplePayErrorCodes,
-  error?: Error,
-): ApplePayError {
-  let message = '';
+export function getApplePayError(code: ApplePayErrorCodes, error?: Error): ApplePayError {
+  let message: string;
   switch (code) {
     case ApplePayErrorCodes.NotAvailable:
       message =

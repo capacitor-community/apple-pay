@@ -13,9 +13,7 @@ import { Logger } from './logger';
 
 interface ApplePayJS {
   canMakePayments: () => boolean;
-  canMakePaymentsWithActiveCard: (
-    merchantIdentifier: string,
-  ) => Promise<boolean>;
+  canMakePaymentsWithActiveCard: (merchantIdentifier: string) => Promise<boolean>;
   [key: string]: any;
 }
 
@@ -36,16 +34,11 @@ export class ApplePayWeb extends WebPlugin implements ApplePayPlugin {
     logger.enabled = level === LogLevel.DEBUG;
   }
 
-  async canMakePayments(
-    options: ApplePayAvailabilityOptions,
-  ): Promise<ApplePayCanMakePaymentsResponse> {
+  async canMakePayments(options: ApplePayAvailabilityOptions): Promise<ApplePayCanMakePaymentsResponse> {
     try {
       this.checkApplePayJSAvailable();
       return {
-        canMakePayments:
-          await this.ApplePaySession.canMakePaymentsWithActiveCard(
-            options.merchantIdentifier,
-          ),
+        canMakePayments: await this.ApplePaySession.canMakePaymentsWithActiveCard(options.merchantIdentifier),
       };
     } catch (e) {
       logger.error('can make payments error', e);
@@ -55,9 +48,7 @@ export class ApplePayWeb extends WebPlugin implements ApplePayPlugin {
     }
   }
 
-  async makePaymentRequest(
-    options: ApplePayRequest,
-  ): Promise<ApplePayPaymentRequestResponse> {
+  async makePaymentRequest(options: ApplePayRequest): Promise<ApplePayPaymentRequestResponse> {
     const isAvailable = this.checkApplePayJSAvailable();
 
     if (!isAvailable) {
@@ -67,10 +58,7 @@ export class ApplePayWeb extends WebPlugin implements ApplePayPlugin {
     return new Promise<ApplePayPaymentRequestResponse>((resolve, reject) => {
       let session: any;
       try {
-        session = new (window as any).ApplePaySession(
-          options.version,
-          options.request,
-        );
+        session = new (window as any).ApplePaySession(options.version, options.request);
         logger.log('Apple Pay Session created');
       } catch (e: any) {
         logger.error('begin session error', e);
@@ -78,51 +66,37 @@ export class ApplePayWeb extends WebPlugin implements ApplePayPlugin {
         return;
       }
 
-      session.onvalidatemerchant = onValidateMerchant(
-        options.merchantValidation,
-        {
-          onSuccess: res => {
-            logger.log('merchant validation complete', res);
-            session.completeMerchantValidation(res);
-          },
-          onError: err => {
-            logger.error('merchant validation error', err);
-            session.abort();
-            reject(
-              getApplePayError(
-                ApplePayErrorCodes.MerchantValidationFailed,
-                err,
-              ),
-            );
-          },
+      session.onvalidatemerchant = onValidateMerchant(options.merchantValidation, {
+        onSuccess: (res) => {
+          logger.log('merchant validation complete', res);
+          session.completeMerchantValidation(res);
         },
-      );
+        onError: (err) => {
+          logger.error('merchant validation error', err);
+          session.abort();
+          reject(getApplePayError(ApplePayErrorCodes.MerchantValidationFailed, err));
+        },
+      });
 
-      session.onpaymentauthorized = onPaymentAuthorized(
-        options.paymentAuthorization,
-        options.request,
-        {
-          onSuccess: res => {
-            logger.log('paymment authorization success', res);
-            session.completePayment({
-              status: this.ApplePaySession.STATUS_SUCCESS,
-            });
-            resolve({
-              success: true,
-              data: res,
-            });
-          },
-          onError: err => {
-            logger.error('payment authorization failed', err);
-            session.completePayment({
-              status: this.ApplePaySession.STATUS_FAILURE,
-            });
-            reject(
-              getApplePayError(ApplePayErrorCodes.AuthorizationFailed, err),
-            );
-          },
+      session.onpaymentauthorized = onPaymentAuthorized(options.paymentAuthorization, options.request, {
+        onSuccess: (res) => {
+          logger.log('paymment authorization success', res);
+          session.completePayment({
+            status: this.ApplePaySession.STATUS_SUCCESS,
+          });
+          resolve({
+            success: true,
+            data: res,
+          });
         },
-      );
+        onError: (err) => {
+          logger.error('payment authorization failed', err);
+          session.completePayment({
+            status: this.ApplePaySession.STATUS_FAILURE,
+          });
+          reject(getApplePayError(ApplePayErrorCodes.AuthorizationFailed, err));
+        },
+      });
 
       session.oncancel = (event: any) => {
         logger.error('canceled', event);

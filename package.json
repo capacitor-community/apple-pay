@@ -28,8 +28,7 @@
     "clean": "rimraf ./dist",
     "watch": "tsc --watch",
     "prepublishOnly": "npm run build",
-    "remove-void-implements": "node scripts/remove-void-implements.js",
-    "docs": "typedoc --plugin typedoc-plugin-markdown --theme ./node_modules/@ionic/markdown-docs-theme/dist src/index.ts && rm -rf website/docs/{enums,interfaces,classes} && mv api/{enums,interfaces,classes} website/docs && mv api/modules.md website/docs/modules.md && rm -rf api"
+    "remove-void-implements": "node scripts/remove-void-implements.js"
   },
   "devDependencies": {
     "@capacitor/android": "next",
@@ -45,8 +44,6 @@
     "rimraf": "^6.1.0",
     "rollup": "^4.53.2",
     "swiftlint": "^2.0.0",
-    "typedoc": "^0.20.30",
-    "typedoc-plugin-markdown": "3.6.0",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {

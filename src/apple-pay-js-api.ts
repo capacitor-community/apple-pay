@@ -1,8 +1,4 @@
-import type {
-  ApplePayMerchantValidation,
-  ApplePayPaymentAuthorization,
-  ApplePayPaymentRequest,
-} from './definitions';
+import type { ApplePayMerchantValidation, ApplePayPaymentAuthorization, ApplePayPaymentRequest } from './definitions';
 import { Logger } from './logger';
 
 const logger = Logger.instance();
@@ -23,18 +19,13 @@ const post = async (path: string, data: any, errorMessage: string) => {
     }
   } catch (error) {
     logger.error('POST error:', error);
-    throw new Error(errorMessage);
+    throw new Error(errorMessage, { cause: error });
   }
 };
 
-export const performValidation = (
-  validationUrl: string,
-  validationData: ApplePayMerchantValidation,
-): Promise<any> => {
+export const performValidation = (validationUrl: string, validationData: ApplePayMerchantValidation): Promise<any> => {
   const data = {
-    validationUrl:
-      validationUrl ??
-      `missing url ${typeof validationUrl} // ${JSON.stringify(validationUrl)}`,
+    validationUrl: validationUrl ?? `missing url ${typeof validationUrl} // ${JSON.stringify(validationUrl)}`,
     body: validationData.params,
   };
   return post(validationData.url, data, 'Could not complete validation');
@@ -49,9 +40,5 @@ export const performApplePayAuthorization = (
     request,
     token,
   };
-  return post(
-    authorization.url,
-    data,
-    'Could not complete authorization transaction',
-  );
+  return post(authorization.url, data, 'Could not complete authorization transaction');
 };

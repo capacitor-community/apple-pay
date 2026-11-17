@@ -18,12 +18,6 @@ struct JSSummaryItem: Codable {
     var label: String
     var amount: String
     var type: String?
-
-    init(label: String, amount: String, type: String?) {
-        self.label = label
-        self.amount = amount
-        self.type = type
-    }
 }
 
 struct JSMerchantValidationParams {
@@ -31,15 +25,6 @@ struct JSMerchantValidationParams {
     var displayName: String
     var initiative: String
     var initiativeContext: String
-
-    init(
-        merchantIdentifier: String, displayName: String, initiative: String, initiativeContext: String
-    ) {
-        self.merchantIdentifier = merchantIdentifier
-        self.displayName = displayName
-        self.initiative = initiative
-        self.initiativeContext = initiativeContext
-    }
 }
 
 struct JSMerchantValidation {
@@ -109,11 +94,6 @@ struct JSPaymentRequest: Codable {
 struct AuthorizationPaymentData: Codable {
     var request: JSPaymentRequest
     var token: TokenData
-
-    init(request: JSPaymentRequest, token: TokenData) {
-        self.request = request
-        self.token = token
-    }
 }
 
 struct TokenPaymentHeaderData: Codable {
@@ -146,12 +126,6 @@ struct TokenPaymentMethod: Codable {
     var displayName: String
     var network: String
     var type: String
-
-    init(displayName: String, network: String, type: String) {
-        self.displayName = displayName
-        self.type = type
-        self.network = network
-    }
 }
 
 struct TokenData: Codable {
