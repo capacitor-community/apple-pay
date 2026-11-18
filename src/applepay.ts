@@ -10,7 +10,7 @@ import type {
 } from './definitions';
 
 const ApplePayImpl = registerPlugin<ApplePayPlugin>('ApplePay', {
-  web: () => import('./web').then(m => new m.ApplePayWeb()),
+  web: () => import('./web').then((m) => new m.ApplePayWeb()),
 });
 
 export class ApplePay {
@@ -40,9 +40,7 @@ export class ApplePay {
    * }
    * ```
    */
-  public static canMakePayments(
-    options: ApplePayAvailabilityOptions,
-  ): Promise<ApplePayCanMakePaymentsResponse> {
+  public static canMakePayments(options: ApplePayAvailabilityOptions): Promise<ApplePayCanMakePaymentsResponse> {
     return ApplePayImpl.canMakePayments(options);
   }
 
@@ -58,9 +56,7 @@ export class ApplePay {
    * }
    * ```
    */
-  public static makePaymentRequest(
-    options: ApplePayRequest,
-  ): Promise<ApplePayPaymentRequestResponse> {
+  public static makePaymentRequest(options: ApplePayRequest): Promise<ApplePayPaymentRequestResponse> {
     return ApplePayImpl.makePaymentRequest(options);
   }
 }
