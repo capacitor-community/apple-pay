@@ -27,8 +27,7 @@
     "build": "npm run clean && tsc && rollup -c rollup.config.mjs",
     "clean": "rimraf ./dist",
     "watch": "tsc --watch",
-    "prepublishOnly": "npm run build",
-    "remove-void-implements": "node scripts/remove-void-implements.js"
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "@capacitor/android": "next",
