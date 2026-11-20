@@ -19,7 +19,7 @@ const post = async (path: string, data: any, errorMessage: string) => {
     }
   } catch (error) {
     logger.error('POST error:', error);
-    throw new Error(errorMessage);
+    throw new Error(errorMessage, { cause: error });
   }
 };
 

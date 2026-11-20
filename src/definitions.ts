@@ -368,7 +368,7 @@ export interface ApplePayError {
 
 /** @ignore */
 export function getApplePayError(code: ApplePayErrorCodes, error?: Error): ApplePayError {
-  let message = '';
+  let message: string;
   switch (code) {
     case ApplePayErrorCodes.NotAvailable:
       message =

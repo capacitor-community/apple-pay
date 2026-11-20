@@ -21,32 +21,32 @@
     "verify:web": "npm run build",
     "lint": "npm run prettier -- --check && npm run swiftlint -- lint",
     "fmt": "npm run eslint -- --fix && npm run prettier -- --write && npm run swiftlint -- --fix --format",
-    "eslint": "eslint . --ext ts",
+    "eslint": "eslint .",
     "prettier": "prettier \"**/*.{css,html,ts,js,java}\" --plugin=prettier-plugin-java",
     "swiftlint": "node-swiftlint",
-    "build": "npm run clean && tsc && rollup -c rollup.config.js",
+    "build": "npm run clean && tsc && rollup -c rollup.config.mjs",
     "clean": "rimraf ./dist",
     "watch": "tsc --watch",
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "@capacitor/android": "^8.0.0",
-    "@capacitor/core": "^8.0.0",
-    "@capacitor/ios": "^8.0.0",
-    "@ionic/eslint-config": "^0.4.0",
+    "@capacitor/android": "next",
+    "@capacitor/core": "next",
+    "@capacitor/ios": "next",
+    "@ionic/eslint-config": "^0.5.0",
     "@ionic/prettier-config": "^4.0.0",
     "@ionic/swiftlint-config": "^2.0.0",
-    "@rollup/plugin-node-resolve": "^8.1.0",
-    "eslint": "^8.57.1",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "eslint": "^10.0.0",
     "prettier": "^3.6.2",
     "prettier-plugin-java": "^2.7.7",
-    "rimraf": "^3.0.0",
-    "rollup": "^2.21.0",
+    "rimraf": "^6.1.0",
+    "rollup": "^4.53.2",
     "swiftlint": "^2.0.0",
     "typescript": "^5.9.3"
   },
   "peerDependencies": {
-    "@capacitor/core": ">=8.0.0"
+    "@capacitor/core": ">=9.0.0-beta.0"
   },
   "files": [
     "dist/",
@@ -76,9 +76,6 @@
   },
   "prettier": "@ionic/prettier-config",
   "swiftlint": "@ionic/swiftlint-config",
-  "eslintConfig": {
-    "extends": "@ionic/eslint-config/recommended"
-  },
   "publishConfig": {
     "access": "public"
   }
